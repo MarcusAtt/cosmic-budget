@@ -51,6 +51,26 @@ render=function(){oldRender();document.querySelectorAll('#activity .row').forEac
 render();
 })();
 </script>
+<style id="original-site-cleanup">
+  .liquid-prototype-badge{display:none!important}
+</style>
+<script id="monthly-outlook-repair">
+  (function(){
+    function setText(ids,value){ids.forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=value})}
+    function money(n){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(Math.max(0,n||0))}
+    function refresh(){
+      if(typeof s==='undefined')return;
+      var month=typeof selectedMonth==='string'?selectedMonth:(localStorage.getItem('cosmic-budget-month')||new Date().toISOString().slice(0,7));
+      var base=new Date(month+'-01T12:00:00'),daysIn=new Date(base.getFullYear(),base.getMonth()+1,0).getDate(),now=new Date();
+      var same=now.getFullYear()===base.getFullYear()&&now.getMonth()===base.getMonth(),day=same?Math.min(daysIn,Math.max(1,now.getDate())):daysIn;
+      var tx=(s.tx||[]).filter(function(x){return(x[4]||month)===month}),spent=tx.filter(function(x){return !x[3]}).reduce(function(a,x){return a+Number(x[1]||0)},0),income=Number(s.income||0),available=Math.max(0,income-spent),projected=same&&day?spent/day*daysIn:spent,daysLeft=Math.max(0,daysIn-day),weekly=daysLeft?available/(daysLeft/7):available;
+      setText(['phase3Projected','p3projected'],money(projected));setText(['phase3Weekly','p3weekly'],money(weekly));setText(['phase3Days','p3days'],String(daysLeft));
+      setText(['phase3Pill','p3pill'],!income?'Add income to forecast':s.limit&&projected>Number(s.limit)?'Watch your pace':projected>income?'Needs attention':'Plan looks steady');
+      setText(['phase3Note','p3note'],!income?'Once income is set, this outlook can estimate what remains safe to spend.':'You have '+money(available)+' available after logged spending. Use the weekly amount as a gentle planning guide.');
+    }
+    refresh();setInterval(refresh,1000);
+  })();
+</script>
 <style id="cosmic-orange-accent-refresh">
   :root{--orange:#ff6b35;--orange-bright:#ff9f1c;--orange-soft:#fff0e7}
   .tabs{border-bottom-color:#f2d7c7!important}
