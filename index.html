@@ -68,7 +68,7 @@ render();
       setText(['phase3Pill','p3pill'],!income?'Add income to forecast':s.limit&&projected>Number(s.limit)?'Watch your pace':projected>income?'Needs attention':'Plan looks steady');
       setText(['phase3Note','p3note'],!income?'Once income is set, this outlook can estimate what remains safe to spend.':'You have '+money(available)+' available after logged spending. Use the weekly amount as a gentle planning guide.');
     }
-    refresh();setInterval(refresh,1000);
+    refresh();setInterval(refresh,100);
   })();
 </script>
 <style id="cosmic-orange-accent-refresh">
