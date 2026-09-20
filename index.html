@@ -59,7 +59,7 @@ render();
     function setText(ids,value){ids.forEach(function(id){var el=document.getElementById(id);if(el)el.textContent=value})}
     function money(n){return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(Math.max(0,n||0))}
     function refresh(){
-      if(typeof s==='undefined')return;
+      if(typeof s==='undefined'){var raw=localStorage.getItem('cosmic-budget-public');try{var parsed=raw?JSON.parse(raw):null;s=parsed&&(parsed.s||parsed)}catch(e){s=null}} if(typeof s==='undefined'||!s)return;
       var month=typeof selectedMonth==='string'?selectedMonth:(localStorage.getItem('cosmic-budget-month')||new Date().toISOString().slice(0,7));
       var base=new Date(month+'-01T12:00:00'),daysIn=new Date(base.getFullYear(),base.getMonth()+1,0).getDate(),now=new Date();
       var same=now.getFullYear()===base.getFullYear()&&now.getMonth()===base.getMonth(),day=same?Math.min(daysIn,Math.max(1,now.getDate())):daysIn;
