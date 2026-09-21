@@ -71,6 +71,30 @@ render();
     refresh();setInterval(refresh,100);
   })();
 </script>
+<script id="phase4SettingsGoalRepair">
+(function(){
+  var name=document.getElementById('staticGoalName'),target=document.getElementById('staticGoalTarget'),saved=document.getElementById('staticGoalSavedInput'),button=document.getElementById('staticSaveGoal'),status=document.getElementById('staticGoalSaved');
+  if(!name||!target||!saved||!button||!status)return;
+  var goal=s.goal||{name:'',target:0,saved:0}; name.value=goal.name||''; target.value=goal.target||''; saved.value=goal.saved||'';
+  function render(){var t=Number(target.value)||0,v=Number(saved.value)||0;status.textContent=t?'Saved '+fmt(v)+' of '+fmt(t)+' ('+Math.round(Math.min(100,v/Math.max(t,1)*100))+'%)':'Add a target to track progress.';}
+  button.onclick=function(){s.goal={name:name.value.trim(),target:Number(target.value)||0,saved:Number(saved.value)||0};save();render();status.textContent='Goal saved on this device.';};
+  render();
+})();
+</script>
+<style id="mobile-preview-styles">
+@media (max-width:700px){
+  body{font-size:16px;padding-bottom:86px;overflow-x:hidden}
+  .wrap{padding:16px 12px 34px;width:100%}
+  .top{gap:14px}.brand{gap:9px}.mark{width:44px;height:44px;border-radius:13px;font-size:23px}.top h1{font-size:26px;letter-spacing:-.04em}.eyebrow{font-size:10px}
+  .top>div:last-child{width:100%;display:grid!important;grid-template-columns:1fr auto auto;gap:7px!important}.top>div:last-child label{grid-column:1/-1}.month,.ghost{min-height:44px;padding:10px 11px;border-radius:13px}
+  .tabs{margin:18px -12px 0;padding:0 12px 8px;overflow-x:auto;flex-wrap:nowrap!important;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}.tab{flex:0 0 auto;min-height:44px;padding:10px 12px;font-size:13px;border-radius:14px}
+  .hero{margin:20px 0 14px;padding:22px 18px;border-radius:22px;gap:14px;align-items:flex-start}.hero h2{font-size:clamp(34px,11vw,48px)}.sub{font-size:14px}.score{flex:0 0 78px;width:78px;height:78px;font-size:23px}.score small{font-size:9px}
+  .grid{gap:10px}.card,.panel{padding:17px;border-radius:18px}.card strong{font-size:27px}.content{gap:10px;margin-top:12px}.panelhead{gap:10px;align-items:flex-start}.panelhead .btn{white-space:normal}.btn{min-height:44px;border-radius:13px;padding:10px 13px}
+  .row{gap:10px;align-items:flex-start}.amount{white-space:nowrap}.notes-fab{right:16px;bottom:18px;width:52px;height:52px}.notes-panel{right:12px;bottom:80px;width:calc(100% - 24px);max-height:70vh;overflow:auto}
+  .liquid-side-rail{bottom:12px!important;z-index:20;padding:6px!important;border-radius:20px!important;box-shadow:0 12px 28px rgba(48,43,115,.2)}.liquid-side-button{min-width:58px;min-height:52px;padding:9px!important;border-radius:14px!important}.liquid-side-icon{width:30px!important;height:30px!important}.liquid-profile-card{z-index:21;bottom:78px!important;left:12px!important;right:12px!important;width:auto!important;max-height:calc(100vh - 120px);overflow:auto}
+  #settings .settings-tools{grid-template-columns:1fr!important}.settings-tools .panel{padding:16px}.calendar-panel{padding:13px}.month-grid{grid-template-columns:repeat(2,1fr)}
+}
+</style>
 <style id="cosmic-orange-accent-refresh">
   :root{--orange:#ff6b35;--orange-bright:#ff9f1c;--orange-soft:#fff0e7}
   .tabs{border-bottom-color:#f2d7c7!important}
@@ -134,7 +158,7 @@ render();
   <div class="hero"><div><p class="eyebrow" style="color:#ffb15f">YOUR CONTROL CENTER</p><h2>Make it<br><span>fit you.</span></h2><p class="sub">Personalize your private budget.</p></div><div class="score">⚙<small>settings</small></div></div>
   <section class="settings-tools">
     <article class="panel"><h3>Preferences</h3><div class="setting-row"><span><b>Prism Glassness</b><br><small class="muted">Choose how solid or glassy the interface feels</small></span><b id="staticIntensityValue" class="liquid-value">70%</b></div><input id="staticIntensity" type="range" min="0" max="100" step="1" value="70"><div class="liquid-range-labels"><span>Solid</span><span>Very glassy</span></div></article>
-    <article class="panel"><h3>Savings goal</h3><label class="muted">Goal name<input id="staticGoalName" placeholder="Emergency fund"></label><label class="muted">Target<input id="staticGoalTarget" type="number" min="0" placeholder="5000"></label><button class="btn" id="staticSaveGoal">Save goal</button><p id="staticGoalSaved" class="muted"></p></article>
+    <article class="panel"><h3>Savings goal</h3><label class="muted">Goal name<input id="staticGoalName" placeholder="Emergency fund"></label><label class="muted">Target<input id="staticGoalTarget" type="number" min="0" placeholder="5000"></label><label class="muted">Saved so far<input id="staticGoalSavedInput" type="number" min="0" placeholder="0"></label><button class="btn" id="staticSaveGoal">Save goal</button><p id="staticGoalSaved" class="muted"></p></article>
     <article class="panel"><h3>Data & insights</h3><p class="muted">Your entries stay in this browser.</p><button class="btn" id="staticExport">Export backup</button></article>
   </section>
 </section>
@@ -457,7 +481,7 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
  window.saveLimit=function(){s.limit=Number($('limitInput').value)||0;save();updateSettings()};window.saveGoal=function(){s.goal={name:$('goalName').value,target:Number($('goalTarget').value)||0,saved:Number($('goalSaved').value)||0};save();updateSettings()};
  window.addRecurring=function(){let n=$('recName').value.trim(),a=Number($('recAmount').value),c=$('recCategory').value.trim()||'Other';if(n&&a){s.recurring.push([n,a,c]);save();updateSettings()}};window.applyRecurring=function(){s.recurring.forEach(r=>{if(!s.tx.some(x=>x[0]===r[0]&&x[4]===selectedMonth))s.tx.push([r[0],r[1],r[2],0,selectedMonth])});save();alert('Recurring items added for '+selectedMonth+'.')};
  window.exportData=function(){let a=document.createElement('a'),b=new Blob([JSON.stringify({s,month:selectedMonth,notes:localStorage.getItem('cosmic-budget-notes')||''},null,2)],{type:'application/json'});a.href=URL.createObjectURL(b);a.download='cosmic-budget-backup.json';a.click()};window.importData=function(e){let r=new FileReader();r.onload=()=>{try{let d=JSON.parse(r.result);s=d.s;selectedMonth=d.month||selectedMonth;save();updateSettings();alert('Backup imported.')}catch(_){alert('Could not read that backup.')}};r.readAsText(e.target.files[0])};
- window.updateSettings=function(){let g=s.goal;$('limitInput').value=s.limit||'';$('goalName').value=g.name||'';$('goalTarget').value=g.target||'';$('goalSaved').value=g.saved||'';let p=g.target?Math.min(100,g.saved/g.target*100):0;$('goalProgress').innerHTML=g.target?'<b>'+esc(g.name||'Savings goal')+'</b><div class="goal-track"><i style="width:'+p+'%"></i></div><span class="muted">'+fmt(g.saved)+' of '+fmt(g.target)+' ('+Math.round(p)+'%)</span>':'<p class="muted">Set a goal to see progress.</p>';document.body.classList.toggle('dark',localStorage.getItem('cosmic-budget-dark')==='1');$('darkToggle').classList.toggle('on',document.body.classList.contains('dark'));$('recurringList').innerHTML=s.recurring.map(r=>'<div class="row"><span>'+esc(r[0])+'</span><b>'+fmt(r[1])+'</b></div>').join('')||'<p class="muted">No recurring items yet.</p>';let vals=[];for(let i=-5;i<=0;i++){let d=new Date(selectedMonth+'-01T12:00:00');d.setMonth(d.getMonth()+i);let m=d.toISOString().slice(0,7),n=s.tx.filter(x=>x[4]===m&&!x[3]).reduce((a,x)=>a+x[1],0);vals.push({m,n})}let max=Math.max(...vals.map(x=>x.n),1);$('trendChart').innerHTML='<p class="muted">Six-month spending trend</p><div class="mini-bars">'+vals.map(x=>'<span style="height:'+Math.max(5,x.n/max*100)+'%"><small>'+x.m.slice(5)+'</small></span>').join('')+'</div>'};
+ window.updateSettings=function(){if(!$('goalSaved'))return;let g=s.goal;$('limitInput').value=s.limit||'';$('goalName').value=g.name||'';$('goalTarget').value=g.target||'';$('goalSaved').value=g.saved||'';let p=g.target?Math.min(100,g.saved/g.target*100):0;$('goalProgress').innerHTML=g.target?'<b>'+esc(g.name||'Savings goal')+'</b><div class="goal-track"><i style="width:'+p+'%"></i></div><span class="muted">'+fmt(g.saved)+' of '+fmt(g.target)+' ('+Math.round(p)+'%)</span>':'<p class="muted">Set a goal to see progress.</p>';document.body.classList.toggle('dark',localStorage.getItem('cosmic-budget-dark')==='1');$('darkToggle').classList.toggle('on',document.body.classList.contains('dark'));$('recurringList').innerHTML=s.recurring.map(r=>'<div class="row"><span>'+esc(r[0])+'</span><b>'+fmt(r[1])+'</b></div>').join('')||'<p class="muted">No recurring items yet.</p>';let vals=[];for(let i=-5;i<=0;i++){let d=new Date(selectedMonth+'-01T12:00:00');d.setMonth(d.getMonth()+i);let m=d.toISOString().slice(0,7),n=s.tx.filter(x=>x[4]===m&&!x[3]).reduce((a,x)=>a+x[1],0);vals.push({m,n})}let max=Math.max(...vals.map(x=>x.n),1);$('trendChart').innerHTML='<p class="muted">Six-month spending trend</p><div class="mini-bars">'+vals.map(x=>'<span style="height:'+Math.max(5,x.n/max*100)+'%"><small>'+x.m.slice(5)+'</small></span>').join('')+'</div>'};
  render=function(){baseRender();alertBox();investmentButtons();search()};render();
 })();
 </script>
