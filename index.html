@@ -63,7 +63,8 @@ render();
 </style>
 <script id="phase8ProfileSettings">
 (function(){
-  var settings=document.getElementById('settings'),tools=settings&&settings.querySelector('.settings-tools');if(!settings||!tools)return;
+  function init(){
+  var settings=document.getElementById('settings'),tools=settings&&settings.querySelector('.settings-tools');if(!settings||!tools){setTimeout(init,40);return;}if(document.getElementById('profileSettingsPanel'))return;
   var panel=document.createElement('article');panel.className='panel profile-settings-panel';panel.id='profileSettingsPanel';panel.innerHTML='<div class="panelhead"><div><h3>Profile</h3><p class="muted">Keep your personal details with your private budget.</p></div></div><div class="profile-fields"><label>Display name<input id="settingsProfileName" placeholder="What should we call you?"></label><label>Avatar initials<input id="settingsProfileInitials" maxlength="3" placeholder="MB"></label></div><div class="profile-save-row"><button class="btn" id="settingsSaveProfile">Save profile</button><p class="muted profile-saved" id="settingsProfileSaved" role="status"></p></div>';
   tools.parentNode.insertBefore(panel,tools);
   var data=JSON.parse(localStorage.getItem('cosmic-budget-profile')||'{}'),name=panel.querySelector('#settingsProfileName'),initials=panel.querySelector('#settingsProfileInitials');name.value=data.name||'';initials.value=data.initials||'';
@@ -71,6 +72,8 @@ render();
   function bindProfileButton(){var profileButton=document.getElementById('liquidProfileButton');if(!profileButton){setTimeout(bindProfileButton,20);return;}profileButton.onclick=openSettings;profileButton.setAttribute('aria-label','Open profile settings');}
   bindProfileButton();
   panel.querySelector('#settingsSaveProfile').onclick=function(){localStorage.setItem('cosmic-budget-profile',JSON.stringify({name:name.value.trim(),initials:initials.value.trim().toUpperCase()}));panel.querySelector('#settingsProfileSaved').textContent='Profile saved on this device.';var oldName=document.getElementById('liquidProfileName'),oldInitials=document.getElementById('liquidProfileInitials');if(oldName)oldName.value=name.value;if(oldInitials)oldInitials.value=initials.value;};
+  }
+  init();
 })();
 </script>
 <style id="phase6ResetSafetyStyles">
