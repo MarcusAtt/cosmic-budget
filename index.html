@@ -170,9 +170,20 @@ render();
   <section class="settings-tools">
     <article class="panel"><h3>Preferences</h3><div class="setting-row"><span><b>Prism Glassness</b><br><small class="muted">Choose how solid or glassy the interface feels</small></span><b id="staticIntensityValue" class="liquid-value">70%</b></div><input id="staticIntensity" type="range" min="0" max="100" step="1" value="70"><div class="liquid-range-labels"><span>Solid</span><span>Very glassy</span></div></article>
     <article class="panel"><h3>Savings goal</h3><label class="muted">Goal name<input id="staticGoalName" placeholder="Emergency fund"></label><label class="muted">Target<input id="staticGoalTarget" type="number" min="0" placeholder="5000"></label><label class="muted">Saved so far<input id="staticGoalSavedInput" type="number" min="0" placeholder="0"></label><button class="btn" id="staticSaveGoal">Save goal</button><p id="staticGoalSaved" class="muted"></p></article>
-    <article class="panel"><h3>Data & insights</h3><p class="muted">Your entries stay in this browser.</p><button class="btn" id="staticExport">Export backup</button></article>
+    <article class="panel"><h3>Recurring expenses</h3><p class="muted">Save regular bills and add them to the current month when due.</p><label class="muted">Bill name<input id="recurringName" placeholder="Phone bill"></label><label class="muted">Amount<input id="recurringAmount" type="number" min="0" placeholder="75"></label><label class="muted">Category<input id="recurringCategory" placeholder="Bills"></label><button class="btn" id="addRecurringButton">Save recurring bill</button><button class="ghost" id="applyRecurringButton">Add due this month</button><div id="recurringList" class="muted"></div></article><article class="panel"><h3>Data & insights</h3><p class="muted">Your entries stay in this browser.</p><button class="btn" id="staticExport">Export backup</button></article>
   </section>
 </section>
+<script id="phase4RecurringExpensesLive">
+(function(){
+  var name=document.getElementById('recurringName'),amount=document.getElementById('recurringAmount'),category=document.getElementById('recurringCategory'),add=document.getElementById('addRecurringButton'),apply=document.getElementById('applyRecurringButton'),list=document.getElementById('recurringList');
+  if(!name||!amount||!category||!add||!apply||!list)return;
+  s.recurring=s.recurring||[];
+  function render(){list.innerHTML=s.recurring.length?s.recurring.map(function(r){return '<div class="row"><span>'+esc(r[0])+'<small class="muted">'+esc(r[2])+'</small></span><b>'+fmt(r[1])+'</b></div>'}).join(''):'<p class="muted">No recurring bills saved yet.</p>';}
+  add.onclick=function(){var n=name.value.trim(),a=Number(amount.value),c=category.value.trim()||'Other';if(!n||a<=0)return;s.recurring.push([n,a,c]);save();name.value='';amount.value='';category.value='';render();};
+  apply.onclick=function(){var added=0;s.recurring.forEach(function(r){if(!s.tx.some(function(x){return x[0]===r[0]&&x[4]===selectedMonth;})){s.tx.push([r[0],r[1],r[2],0,selectedMonth]);added++;}});save();list.insertAdjacentHTML('afterbegin','<p class="muted">'+(added?'Added '+added+' due item'+(added===1?'':'s')+' this month.':'Everything is already added for this month.')+'</p>');};
+  render();
+})();
+</script>
 <script id="staticSettingsRepair">
   (function(){
     var section=document.getElementById('settings');
