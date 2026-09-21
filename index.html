@@ -212,7 +212,9 @@ render();
   function close(){modal.classList.remove('is-open');}
   function open(){input.value=Number(s.income||0).toFixed(2);modal.classList.add('is-open');setTimeout(function(){input.focus();input.select();},30);}
   window.setIncome=open;
-  Array.prototype.forEach.call(document.querySelectorAll('button'),function(button){if(button.textContent.trim()==='Edit income'){button.classList.add('income-edit-button');button.removeAttribute('onclick');button.onclick=open;}});
+  var orangeButton='linear-gradient(135deg,#ff693d,#ff9d14)';
+  saveButton.style.setProperty('background',orangeButton,'important');saveButton.style.setProperty('color','#fff','important');
+  Array.prototype.forEach.call(document.querySelectorAll('button'),function(button){if(button.textContent.trim()==='Edit income'){button.classList.add('income-edit-button');button.style.setProperty('background',orangeButton,'important');button.style.setProperty('color','#fff','important');button.removeAttribute('onclick');button.onclick=open;}});
   cancel.onclick=close;
   modal.addEventListener('click',function(e){if(e.target===modal)close();});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('is-open'))close();});
