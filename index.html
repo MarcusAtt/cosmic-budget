@@ -154,6 +154,17 @@ render();
     };
   })();
 </script>
+<script id="phase4RecurringExpenses">
+(function(){
+  var name=document.getElementById('recurringName'),amount=document.getElementById('recurringAmount'),category=document.getElementById('recurringCategory'),add=document.getElementById('addRecurringButton'),apply=document.getElementById('applyRecurringButton'),list=document.getElementById('recurringList');
+  if(!name||!amount||!category||!add||!apply||!list)return;
+  s.recurring=s.recurring||[];
+  function render(){list.innerHTML=s.recurring.length?s.recurring.map(function(r){return '<div class="row"><span>'+esc(r[0])+'<small class="muted">'+esc(r[2])+'</small></span><b>'+fmt(r[1])+'</b></div>'}).join(''):'<p class="muted">No recurring bills saved yet.</p>';}
+  add.onclick=function(){var n=name.value.trim(),a=Number(amount.value),c=category.value.trim()||'Other';if(!n||a<=0)return;s.recurring.push([n,a,c]);save();name.value='';amount.value='';category.value='';render();};
+  apply.onclick=function(){var added=0;s.recurring.forEach(function(r){if(!s.tx.some(function(x){return x[0]===r[0]&&x[4]===selectedMonth;})){s.tx.push([r[0],r[1],r[2],0,selectedMonth]);added++;}});save();list.insertAdjacentHTML('afterbegin','<p class="muted">'+(added?'Added '+added+' due item'+(added===1?'':'s')+' this month.':'Everything is already added for this month.')+'</p>');};
+  render();
+})();
+</script>
 <section id="settings" class="hidden">
   <div class="hero"><div><p class="eyebrow" style="color:#ffb15f">YOUR CONTROL CENTER</p><h2>Make it<br><span>fit you.</span></h2><p class="sub">Personalize your private budget.</p></div><div class="score">⚙<small>settings</small></div></div>
   <section class="settings-tools">
