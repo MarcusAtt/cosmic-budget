@@ -273,28 +273,12 @@ render();
   window.openContributionEdit=open;window.editInv=open;window.openContributionDelete=openDelete;modal.querySelector('#editContributionCancel').onclick=close;modal.addEventListener('click',function(e){if(e.target===modal)close();});deleteModal.querySelector('#deleteContributionCancel').onclick=closeDelete;deleteModal.addEventListener('click',function(e){if(e.target===deleteModal)closeDelete();});document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(modal.style.display==='flex')close();if(deleteModal.style.display==='flex')closeDelete();}});modal.querySelector('#editContributionSave').onclick=function(){var label=name.value.trim(),value=Number(amount.value);if(index<0||!label||!Number.isFinite(value)||value<=0)return;var old=s.inv[index];s.inv[index]=[label,value,old[2],old[3]||selectedMonth];save();close();};deleteModal.querySelector('#deleteContributionConfirm').onclick=function(){if(deleteIndex<0)return;s.inv.splice(deleteIndex,1);save();closeDelete();};
 })();
 </script>
-<style id="demoDataStyles">
-  .demo-data-panel{margin-top:14px;border:1px solid rgba(255,255,255,.78)!important;background:linear-gradient(145deg,rgba(255,255,255,.72),rgba(255,236,218,.42))!important}
-  .demo-data-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
-  .demo-data-actions button{border:0;border-radius:14px;padding:11px 15px;font:inherit;font-weight:800;cursor:pointer}
-  .demo-load{background:linear-gradient(135deg,#ff693d,#ff9d14);color:#fff;box-shadow:0 10px 24px rgba(255,105,61,.2)}
-  .demo-clear{background:rgba(255,255,255,.7);color:#273052;border:1px solid rgba(255,255,255,.86)!important}
+<style id="contributionListAlignment">
+  #investments .row{display:grid;grid-template-columns:minmax(0,1fr) minmax(120px,160px) auto;align-items:center;gap:12px}
+  #investments .row>.amount{text-align:center;justify-self:center;white-space:nowrap}
+  #investments .investment-actions{justify-self:end;white-space:nowrap}
+  @media(max-width:700px){#investments .row{grid-template-columns:minmax(0,1fr) minmax(86px,auto);gap:8px}#investments .row>.amount{justify-self:end;text-align:right}#investments .investment-actions{grid-column:1 / -1;justify-self:start}}
 </style>
-<script id="demoDataMode">
-(function(){
-  var demoKey='cosmic-budget-demo-backup';
-  function sample(){return {income:4200,weekly:125,limit:2600,goal:{name:'Emergency fund',target:5000,saved:1850},recurring:[['Phone bill',75,'Bills'],['Streaming',18,'Fun'],['Gym membership',42,'Health']],tx:[
-    ['Paycheck',4200,'Income',1,'2026-09'],['Rent',1450,'Housing',0,'2026-09'],['Groceries',186.42,'Food',0,'2026-09'],['Gas and parking',92.5,'Transport',0,'2026-09'],['Concert tickets',120,'Fun',0,'2026-09'],['Pharmacy',34.8,'Health',0,'2026-09'],
-    ['Paycheck',4200,'Income',1,'2026-08'],['Rent',1450,'Housing',0,'2026-08'],['Groceries',214.16,'Food',0,'2026-08'],['Weekend trip',280,'Fun',0,'2026-08'],
-    ['Paycheck',4200,'Income',1,'2026-10'],['Rent',1450,'Housing',0,'2026-10'],['Groceries',160,'Food',0,'2026-10']
-  ],inv:[['Index fund',125,'2026-09-05T12:00:00Z','2026-09'],['Roth IRA',100,'2026-09-12T12:00:00Z','2026-09'],['Index fund',125,'2026-09-19T12:00:00Z','2026-09'],['Roth IRA',100,'2026-08-07T12:00:00Z','2026-08'],['Index fund',125,'2026-08-14T12:00:00Z','2026-08']]};}
-  function refresh(){if(typeof render==='function')render();if(typeof renderLifetime==='function')renderLifetime();if(typeof renderCalendar==='function')renderCalendar();if(typeof updateSettings==='function')updateSettings();}
-  function load(){if(!localStorage.getItem(demoKey))localStorage.setItem(demoKey,localStorage.getItem('cosmic-budget-public')||'');s=sample();localStorage.setItem('cosmic-budget-profile',JSON.stringify({name:'Demo planner',initials:'DP'}));localStorage.setItem('cosmic-budget-notes','Review groceries before Friday. Compare the concert purchase in What-if.');localStorage.setItem('cosmic-budget-month','2026-09');selectedMonth='2026-09';save();refresh();show('budget',document.querySelector('.tab'));}
-  function restore(){var old=localStorage.getItem(demoKey);if(old){if(old.trim())localStorage.setItem('cosmic-budget-public',old);else localStorage.removeItem('cosmic-budget-public');localStorage.removeItem(demoKey);}localStorage.removeItem('cosmic-budget-notes');location.reload();}
-  function init(){var tools=document.querySelector('#settings .settings-tools');if(!tools){setTimeout(init,80);return;}if(document.getElementById('demoDataPanel'))return;var panel=document.createElement('article');panel.className='panel demo-data-panel';panel.id='demoDataPanel';panel.innerHTML='<h3>Test run data</h3><p class="muted">Load a complete sample budget to preview every tab with realistic entries. Your current browser data is backed up first.</p><div class="demo-data-actions"><button type="button" class="demo-load">Load sample data</button><button type="button" class="demo-clear">Restore my data</button></div><p class="muted" id="demoDataStatus" role="status"></p>';tools.appendChild(panel);panel.querySelector('.demo-load').onclick=function(){load();panel.querySelector('#demoDataStatus').textContent='Sample data loaded across Budget, Investments, Lifetime, What-if, Settings, and Notes.'};panel.querySelector('.demo-clear').onclick=restore;}
-  init();if(new URLSearchParams(location.search).get('demo')==='1'&&!sessionStorage.getItem('cosmic-budget-demo-loaded')){sessionStorage.setItem('cosmic-budget-demo-loaded','1');load();}
-})();
-</script>
 <style id="phase11GoalProgressStyles">
   .goal-progress-dashboard{margin-top:18px;padding:22px;border:1px solid rgba(255,255,255,.72);border-radius:22px;background:linear-gradient(135deg,rgba(255,255,255,.6),rgba(255,236,218,.44));box-shadow:0 16px 40px rgba(53,43,112,.1),inset 0 1px rgba(255,255,255,.9);backdrop-filter:blur(18px) saturate(145%);-webkit-backdrop-filter:blur(18px) saturate(145%)}
   .goal-progress-dashboard .goal-progress-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
