@@ -368,7 +368,7 @@ render();
     background: rgba(255,255,255,.58);
     box-shadow: 0 8px 20px rgba(53,43,112,.1), inset 0 1px 0 rgba(255,255,255,.8);
   }
-  .liquid-side-icon { width: 30px; height: 30px; display:grid; place-items:center; border-radius: 11px; background: linear-gradient(135deg,#ff934c,#ff6033); color:#fff; font-size:13px; }
+  .liquid-side-icon { width: 30px; height: 30px; display:grid; place-items:center; border-radius: 11px; background: linear-gradient(135deg,#ff934c,#ff6033); color:#fff; font-size:13px; } .liquid-side-icon svg{width:18px;height:18px;display:block;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
   .liquid-profile-card {
     position: fixed;
     left: 184px;
@@ -395,7 +395,7 @@ render();
     if (document.querySelector('.liquid-side-rail')) return;
     var rail = document.createElement('aside');
     rail.className = 'liquid-side-rail';
-    rail.innerHTML = '<div class="liquid-side-rail-label">ACCOUNT</div><button class="liquid-side-button active" id="liquidProfileButton"><i class="liquid-side-icon">♙</i><span>Profile</span></button><button class="liquid-side-button" id="liquidSettingsButton"><i class="liquid-side-icon">⚙</i><span>Settings</span></button>';
+    rail.innerHTML = '<div class="liquid-side-rail-label">ACCOUNT</div><button class="liquid-side-button active" id="liquidProfileButton"><i class="liquid-side-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"></circle><path d="M5 20c.7-3.5 3-5 7-5s6.3 1.5 7 5"></path></svg></i><span>Profile</span></button><button class="liquid-side-button" id="liquidSettingsButton"><i class="liquid-side-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2v3m0 14v3M2 12h3m14 0h3M4.9 4.9 7 7m10 10 2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"></path><circle cx="12" cy="12" r="4"></circle></svg></i><span>Settings</span></button>';
     document.body.appendChild(rail);
     var profile = document.createElement('section');
     profile.className = 'liquid-profile-card hidden';
