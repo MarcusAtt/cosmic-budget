@@ -263,6 +263,15 @@ render();
     };
   })();
 </script>
+<script id="phase11ContributionEdit">
+(function(){
+  var modal=document.createElement('div');modal.id='contributionEditModal';modal.style.cssText='position:fixed;inset:0;z-index:10004;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(31,24,75,.24);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)';
+  modal.innerHTML='<div class="budget-glass-card"><h2>Edit contribution</h2><p>Update this contribution without changing its original date.</p><label for="editContributionName">Account or goal<input id="editContributionName" placeholder="Index fund"></label><label for="editContributionAmount">Contribution amount<input id="editContributionAmount" type="number" min="0.01" step="0.01" inputmode="decimal"></label><div class="budget-glass-actions"><button type="button" class="budget-cancel" id="editContributionCancel">Cancel</button><button type="button" class="budget-glass-save" id="editContributionSave">Save contribution</button></div></div>';
+  document.body.appendChild(modal);
+  var index=-1,name=modal.querySelector('#editContributionName'),amount=modal.querySelector('#editContributionAmount');function close(){index=-1;modal.style.display='none';}function open(i){var item=s.inv[i];if(!item)return;index=i;name.value=item[0]||'';amount.value=Number(item[1]||0).toFixed(2);modal.style.display='flex';setTimeout(function(){name.focus();name.select();},30);}
+  window.editInv=open;modal.querySelector('#editContributionCancel').onclick=close;modal.addEventListener('click',function(e){if(e.target===modal)close();});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.style.display==='flex')close();});modal.querySelector('#editContributionSave').onclick=function(){var label=name.value.trim(),value=Number(amount.value);if(index<0||!label||!Number.isFinite(value)||value<=0)return;var old=s.inv[index];s.inv[index]=[label,value,old[2],old[3]||selectedMonth];save();close();};
+})();
+</script>
 <style id="phase11GoalProgressStyles">
   .goal-progress-dashboard{margin-top:18px;padding:22px;border:1px solid rgba(255,255,255,.72);border-radius:22px;background:linear-gradient(135deg,rgba(255,255,255,.6),rgba(255,236,218,.44));box-shadow:0 16px 40px rgba(53,43,112,.1),inset 0 1px rgba(255,255,255,.9);backdrop-filter:blur(18px) saturate(145%);-webkit-backdrop-filter:blur(18px) saturate(145%)}
   .goal-progress-dashboard .goal-progress-head{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
