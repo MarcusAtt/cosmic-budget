@@ -263,6 +263,28 @@ render();
     };
   })();
 </script>
+<style id="phase9ActivityDeleteStyles">
+  .activity-delete-btn{margin-left:6px!important;color:#b91c1c!important;border-color:rgba(239,68,68,.26)!important;background:rgba(255,235,235,.5)!important}
+  #activityDeleteModal{position:fixed;inset:0;z-index:10003;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(31,24,75,.24);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+  #activityDeleteModal.is-open{display:flex}
+  #activityDeleteModal .delete-glass-card{width:min(400px,100%);padding:28px;border:1px solid rgba(255,255,255,.78);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.84),rgba(255,244,251,.5));box-shadow:0 24px 70px rgba(53,37,113,.28),inset 0 1px rgba(255,255,255,.92);color:#172044}
+  #activityDeleteModal h2{margin:0 0 8px;font-size:1.45rem}
+  #activityDeleteModal p{margin:0;color:#5e6a8e;line-height:1.5}
+  #activityDeleteModal .delete-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
+  #activityDeleteModal button{border:0;border-radius:14px;padding:12px 18px;font:inherit;font-weight:800;cursor:pointer}
+  #activityDeleteModal .delete-cancel{background:rgba(255,255,255,.66);color:#273052}
+  #activityDeleteModal .delete-confirm{background:linear-gradient(135deg,rgba(255,255,255,.4),rgba(239,68,68,.88),rgba(185,28,28,.8))!important;color:#fff!important;border:1px solid rgba(255,255,255,.62)!important;box-shadow:0 10px 24px rgba(185,28,28,.25),inset 0 1px rgba(255,255,255,.58)!important}
+  @media(max-width:700px){.activity-delete-btn{margin-left:0!important;margin-top:6px!important}.delete-actions{flex-wrap:wrap}.delete-actions button{flex:1}}
+</style>
+<script id="phase9ActivityDelete">
+(function(){
+  var modal=document.createElement('div');modal.id='activityDeleteModal';modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');modal.innerHTML='<div class="delete-glass-card"><h2>Delete activity?</h2><p id="activityDeleteMessage">This entry will be removed from your selected month.</p><div class="delete-actions"><button type="button" class="delete-cancel" id="activityDeleteCancel">Cancel</button><button type="button" class="delete-confirm" id="activityDeleteConfirm">Delete activity</button></div></div>';document.body.appendChild(modal);
+  var pending=-1;function close(){pending=-1;modal.classList.remove('is-open');}function open(index){pending=index;var item=s.tx[index];modal.querySelector('#activityDeleteMessage').textContent='Remove “'+(item?item[0]:'this activity')+'” from '+new Date(selectedMonth+'-01T12:00:00').toLocaleDateString('en-US',{month:'long',year:'numeric'})+'?';modal.classList.add('is-open');}
+  function addDeleteButtons(){var expenses=s.tx.filter(function(x){return (x[4]||selectedMonth)===selectedMonth&&!x[3];}).slice().reverse();document.querySelectorAll('#activity .row').forEach(function(row,i){if(row.querySelector('.activity-delete-btn'))return;var item=expenses[i];if(!item)return;var button=document.createElement('button');button.type='button';button.className='ghost activity-delete-btn';button.textContent='Delete';button.setAttribute('aria-label','Delete '+item[0]);button.onclick=function(){open(s.tx.indexOf(item));};row.appendChild(button);});}
+  var oldRender=render;render=function(){oldRender();addDeleteButtons();};addDeleteButtons();
+  modal.querySelector('#activityDeleteCancel').onclick=close;modal.addEventListener('click',function(e){if(e.target===modal)close();});document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('is-open'))close();});modal.querySelector('#activityDeleteConfirm').onclick=function(){if(pending>=0){s.tx.splice(pending,1);save();}close();};
+})();
+</script>
 <script id="phase4RecurringExpenses">
 (function(){
   var name=document.getElementById('recurringName'),amount=document.getElementById('recurringAmount'),category=document.getElementById('recurringCategory'),add=document.getElementById('addRecurringButton'),apply=document.getElementById('applyRecurringButton'),list=document.getElementById('recurringList');
