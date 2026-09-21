@@ -196,7 +196,8 @@ render();
   #incomeGlassModal .income-glass-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}
   #incomeGlassModal button{border:0;border-radius:14px;padding:12px 18px;font:inherit;font-weight:800;cursor:pointer}
   #incomeGlassModal .income-cancel{background:rgba(255,255,255,.64);color:#273052}
-  #incomeGlassModal .income-save{background:linear-gradient(135deg,#ff693d,#ff9d14);color:#fff;box-shadow:0 10px 24px rgba(255,105,61,.25)}
+  #incomeGlassModal .income-save{background:linear-gradient(135deg,#ff693d,#ff9d14)!important;color:#fff!important;box-shadow:0 10px 24px rgba(255,105,61,.25)}
+  .income-edit-button{background:linear-gradient(135deg,#ff693d,#ff9d14)!important;color:#fff!important;border:0!important;border-radius:14px!important;box-shadow:0 10px 24px rgba(255,105,61,.2);padding:12px 18px!important;font-weight:800}
   @media(max-width:520px){#incomeGlassModal .income-glass-card{padding:22px;border-radius:24px}}
 </style>
 <script id="phase4IncomeGlassModal">
@@ -211,7 +212,7 @@ render();
   function close(){modal.classList.remove('is-open');}
   function open(){input.value=Number(s.income||0).toFixed(2);modal.classList.add('is-open');setTimeout(function(){input.focus();input.select();},30);}
   window.setIncome=open;
-  Array.prototype.forEach.call(document.querySelectorAll('button'),function(button){if(button.textContent.trim()==='Edit income'){button.removeAttribute('onclick');button.onclick=open;}});
+  Array.prototype.forEach.call(document.querySelectorAll('button'),function(button){if(button.textContent.trim()==='Edit income'){button.classList.add('income-edit-button');button.removeAttribute('onclick');button.onclick=open;}});
   cancel.onclick=close;
   modal.addEventListener('click',function(e){if(e.target===modal)close();});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('is-open'))close();});
