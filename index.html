@@ -284,8 +284,12 @@ render();
   #settings .score small{font-size:11px;line-height:1;letter-spacing:.01em}
   .tabs{overflow-x:auto;scrollbar-width:none}
   .tabs::-webkit-scrollbar{display:none}
+  .panelhead,.phase12-actions,.budget-glass-actions,.reset-actions,.profile-save-row{gap:12px;flex-wrap:wrap}
+  .panel button,.settings-tools button{margin:4px 6px 0 0}
+  .panelhead button{margin-top:0}
+  .row .ghost{margin:0 4px 0 0}
   #recurringList .row{gap:12px}
-  .recurring-actions{display:flex;gap:7px;white-space:nowrap}
+  .recurring-actions{display:flex;gap:10px;flex-wrap:wrap;white-space:nowrap;justify-content:flex-end}
   .recurring-actions button{font-size:12px;padding:7px 10px}
   #phase12RecurringModal{position:fixed;inset:0;z-index:10005;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(31,24,75,.24);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
   #phase12RecurringModal.is-open{display:flex}
