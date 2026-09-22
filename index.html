@@ -67,6 +67,7 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
   .liquid-side-button:hover{transform:translateY(-2px)}
   #phase13Welcome{border-color:rgba(255,107,53,.28)}
   #phase14Tip{margin:18px 0 0;padding:12px 14px;border-radius:16px;background:rgba(255,240,231,.72);color:#25304f;font-size:13px;line-height:1.45}
+  #phase15DataStatus{margin:14px 0 0;padding:12px 14px;border-radius:16px;background:rgba(255,240,231,.72);color:#25304f;font-size:13px;line-height:1.45}
   @media(max-width:700px){.liquid-side-rail{padding:8px;gap:6px}.liquid-side-button{min-width:52px;min-height:52px}.tabs{overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px}.tab{flex:0 0 auto}}
 </style>
 <script id="phase14Usability">
@@ -84,8 +85,15 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
         if(noteButtons[0]){noteButtons[0].removeAttribute('onclick');noteButtons[0].addEventListener('click',function(){notes.classList.add('hidden');});}
         if(noteButtons[1]){noteButtons[1].removeAttribute('onclick');noteButtons[1].addEventListener('click',function(){localStorage.setItem('cosmic-budget-notes',document.getElementById('notesText').value);document.getElementById('notesSaved').textContent='Saved on this device.';});}
       }
+      var panels=document.querySelectorAll('#settings .settings-tools .panel'),dataPanel;
+      Array.prototype.forEach.call(panels,function(panel){if((panel.innerText||'').indexOf('Data & insights')>=0)dataPanel=panel;});
+      if(dataPanel&&!document.getElementById('phase15DataStatus')){var status=document.createElement('div');status.id='phase15DataStatus';status.innerHTML='<b>Private by default</b><br>Your budget stays in this browser. Export a backup before clearing browser data or switching devices.';dataPanel.appendChild(status);}
+      var exportButton=document.getElementById('staticExport');
+      if(exportButton&&!exportButton.dataset.statusBound){exportButton.dataset.statusBound='true';exportButton.addEventListener('click',function(){var status=document.getElementById('phase15DataStatus');if(status)status.innerHTML='<b>Backup ready</b><br>Your budget backup was exported from this browser.';});}
+      var importInput=document.getElementById('staticImportFile');
+      if(importInput&&!importInput.dataset.statusBound){importInput.dataset.statusBound='true';importInput.addEventListener('change',function(){var status=document.getElementById('phase15DataStatus');if(status&&importInput.files&&importInput.files.length)status.innerHTML='<b>Backup selected</b><br>Review the imported data, then continue using this browser.';});}
     }
-    apply();setTimeout(apply,250);setTimeout(apply,900);
+    apply();setTimeout(apply,250);setTimeout(apply,900);setTimeout(apply,1500);
   })();
 </script>
 
