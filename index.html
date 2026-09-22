@@ -70,6 +70,27 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     if(typeof renderLifetime==='function')renderLifetime();
   })();
 </script>
+<style id="phase25StarterStyles">
+  #phase25Starter{margin:0 0 18px;padding:18px 20px;border:1px solid rgba(255,255,255,.8);border-radius:22px;background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,240,231,.72));box-shadow:0 16px 38px rgba(55,43,107,.09),inset 0 1px rgba(255,255,255,.92)}
+  #phase25Starter[hidden]{display:none!important}
+  #phase25Starter h3{margin:0 0 5px;font-size:20px;color:#18204f}
+  #phase25Starter p{margin:0;color:#586486;line-height:1.45}
+  #phase25Starter .phase25-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+  #phase25Starter .phase25-step{padding:12px;border-radius:15px;background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.8)}
+  #phase25Starter .phase25-step b{display:block;color:#d84d22;margin-bottom:3px}
+  #phase25Starter .phase25-step span{font-size:13px;color:#586486;line-height:1.35}
+  @media(max-width:700px){#phase25Starter{padding:16px;border-radius:18px}#phase25Starter .phase25-steps{grid-template-columns:1fr;gap:8px}#phase25Starter .phase25-step{display:flex;gap:8px;align-items:baseline;padding:10px 12px}}
+</style>
+<script id="phase25StarterGuide">
+  (function(){
+    var budget=document.getElementById('budget'),hero=budget&&budget.querySelector('.hero');
+    if(!budget||!hero||document.getElementById('phase25Starter'))return;
+    var guide=document.createElement('section');guide.id='phase25Starter';guide.hidden=true;guide.innerHTML='<h3>Start your plan</h3><p>Three small steps are enough to make this dashboard useful.</p><div class="phase25-steps"><div class="phase25-step"><b>1</b><span>Add your monthly income.</span></div><div class="phase25-step"><b>2</b><span>Log a purchase or bill.</span></div><div class="phase25-step"><b>3</b><span>Set a weekly investing goal.</span></div></div>';hero.insertAdjacentElement('afterend',guide);
+    function refresh(){var empty=typeof s!=='undefined'&&Number(s.income||0)===0&&(!Array.isArray(s.tx)||!s.tx.length)&&(!Array.isArray(s.inv)||!s.inv.length);guide.hidden=!empty;}
+    var oldRender=window.render;if(typeof oldRender==='function'&&!oldRender.__phase25){var wrapped=function(){oldRender();refresh();};wrapped.__phase25=true;window.render=wrapped;}
+    refresh();
+  })();
+</script>
 <style id="phase14UsabilityStyles">
   .liquid-side-button:focus-visible,.tab:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #ff8a4c;outline-offset:3px}
   .liquid-side-button{transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
