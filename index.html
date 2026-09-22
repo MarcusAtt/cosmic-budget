@@ -358,6 +358,7 @@ render();
     document.querySelectorAll('button').forEach(function(button){
       if(button.textContent.trim()==='+ Add expense'){button.textContent='+ Add activity';button.setAttribute('aria-label','Add activity');}
     });
+    document.addEventListener('click',function(event){var button=event.target.closest&&event.target.closest('button');if(button&&button.textContent.trim()==='+ Add activity'){setTimeout(function(){var title=document.getElementById('expenseDialogTitle');if(title)title.textContent='Add activity';},0);}});
     var recent=document.querySelector('#budget .panel:first-child .panelhead');
     if(recent&&!document.querySelector('#phase18ActivityHelper')){var helper=document.createElement('p');helper.id='phase18ActivityHelper';helper.className='phase18-helper';helper.textContent='Add income or spending as it happens. Categories are suggested for you.';recent.parentNode.insertBefore(helper,recent.nextSibling);}
     var toast=document.createElement('div');toast.id='phase18Toast';toast.className='phase18-toast';toast.setAttribute('role','status');document.body.appendChild(toast);var toastTimer;
