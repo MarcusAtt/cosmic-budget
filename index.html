@@ -87,6 +87,8 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
       }
       var panels=document.querySelectorAll('#settings .settings-tools .panel'),dataPanel;
       Array.prototype.forEach.call(panels,function(panel){if((panel.innerText||'').indexOf('Data & insights')>=0)dataPanel=panel;});
+      var duplicateSlider=document.getElementById('liquidIntensity');
+      if(duplicateSlider&&document.getElementById('staticIntensity')){var duplicateControl=duplicateSlider.closest('.liquid-control');if(duplicateControl)duplicateControl.remove();}
       if(dataPanel&&!document.getElementById('phase15DataStatus')){var status=document.createElement('div');status.id='phase15DataStatus';status.innerHTML='<b>Private by default</b><br>Your budget stays in this browser. Export a backup before clearing browser data or switching devices.';dataPanel.appendChild(status);}
       var exportButton=document.getElementById('staticExport');
       if(exportButton&&!exportButton.dataset.statusBound){exportButton.dataset.statusBound='true';exportButton.addEventListener('click',function(){var status=document.getElementById('phase15DataStatus');if(status)status.innerHTML='<b>Backup ready</b><br>Your budget backup was exported from this browser.';});}
