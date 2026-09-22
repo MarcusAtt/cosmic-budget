@@ -119,6 +119,20 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     document.querySelectorAll('.notes-fab').forEach(function(button){button.setAttribute('aria-label','Open notes');});
   })();
 </script>
+<script id="phase34EscapeDismiss">
+  (function(){
+    var reset=document.querySelector('.top .ghost');
+    if(reset){reset.setAttribute('aria-label','Reset current month');reset.title='Reset current month';}
+    document.addEventListener('keydown',function(event){
+      if(event.key!=='Escape')return;
+      var calendar=document.getElementById('calendarPanel'),notes=document.getElementById('notesPanel');
+      var closed=false;
+      if(calendar&&!calendar.classList.contains('hidden')){calendar.classList.add('hidden');closed=true;document.getElementById('calendarBtn')?.focus();}
+      if(notes&&!notes.classList.contains('hidden')){notes.classList.add('hidden');closed=true;document.querySelector('.notes-fab')?.focus();}
+      if(closed)event.preventDefault();
+    });
+  })();
+</script>
 <script id="phase24CleanStart">
   (function(){
     if(localStorage.getItem('cosmic-budget-public')||typeof s==='undefined'||!Array.isArray(s.tx)||!s.tx.length)return;
