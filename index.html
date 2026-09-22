@@ -221,6 +221,24 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     document.head.appendChild(style);
   })();
 </script>
+<script id="phase44DialogLabels">
+  (function(){
+    var next=0;
+    function mark(){
+      document.querySelectorAll('[role="dialog"]').forEach(function(dialog){
+        var title=dialog.querySelector('h1,h2,h3,[data-dialog-title]');
+        if(title&&!title.id)title.id='phase44DialogTitle'+(++next);
+        if(title&&!dialog.getAttribute('aria-labelledby'))dialog.setAttribute('aria-labelledby',title.id);
+        var description=dialog.querySelector('p,[data-dialog-description]');
+        if(description&&!description.id)description.id='phase44DialogDescription'+(++next);
+        if(description&&!dialog.getAttribute('aria-describedby'))dialog.setAttribute('aria-describedby',description.id);
+      });
+    }
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mark);
+    else mark();
+    new MutationObserver(mark).observe(document.documentElement,{childList:true,subtree:true});
+  })();
+</script>
 <script id="phase24CleanStart">
   (function(){
     if(localStorage.getItem('cosmic-budget-public')||typeof s==='undefined'||!Array.isArray(s.tx)||!s.tx.length)return;
