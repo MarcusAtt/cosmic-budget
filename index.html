@@ -91,6 +91,17 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     refresh();
   })();
 </script>
+<script id="phase27AccessibleTabs">
+  (function(){
+    var tabs=Array.prototype.slice.call(document.querySelectorAll('.tab'));
+    var ids=['budget','invest','lifetime','whatif','settings'];
+    if(!tabs.length)return;
+    function sync(){tabs.forEach(function(tab,index){var id=ids[index];if(!id)return;var panel=document.getElementById(id),active=tab.classList.contains('active');tab.setAttribute('role','tab');tab.setAttribute('aria-controls',id);tab.setAttribute('aria-selected',active?'true':'false');if(panel){panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby',tab.id||'');panel.setAttribute('aria-hidden',active?'false':'true');}});}
+    tabs.forEach(function(tab){new MutationObserver(sync).observe(tab,{attributes:true,attributeFilter:['class']});});
+    document.addEventListener('click',function(event){if(event.target.closest&&event.target.closest('.tab'))setTimeout(sync,0);});
+    sync();
+  })();
+</script>
 <style id="phase14UsabilityStyles">
   .liquid-side-button:focus-visible,.tab:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #ff8a4c;outline-offset:3px}
   .liquid-side-button{transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
