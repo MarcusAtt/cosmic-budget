@@ -76,6 +76,14 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
       Object.keys(labels).forEach(function(id){var el=document.getElementById(id);if(el){el.setAttribute('aria-label',labels[id]);el.title=labels[id];}});
       var welcome=document.getElementById('phase13Welcome');
       if(welcome&&!document.getElementById('phase14Tip')){var tip=document.createElement('p');tip.id='phase14Tip';tip.innerHTML='<b>Helpful rhythm:</b> add income first, then log activity as it happens. Your outlook and category totals update automatically.';welcome.appendChild(tip);}
+      var notes=document.getElementById('notesPanel'),fab=document.querySelector('.notes-fab');
+      if(notes&&fab&&!fab.dataset.notesBound){
+        fab.dataset.notesBound='true';fab.removeAttribute('onclick');fab.setAttribute('aria-label','Open notes');
+        fab.addEventListener('click',function(){notes.classList.toggle('hidden');if(!notes.classList.contains('hidden'))document.getElementById('notesText').value=localStorage.getItem('cosmic-budget-notes')||'';});
+        var noteButtons=notes.querySelectorAll('button');
+        if(noteButtons[0]){noteButtons[0].removeAttribute('onclick');noteButtons[0].addEventListener('click',function(){notes.classList.add('hidden');});}
+        if(noteButtons[1]){noteButtons[1].removeAttribute('onclick');noteButtons[1].addEventListener('click',function(){localStorage.setItem('cosmic-budget-notes',document.getElementById('notesText').value);document.getElementById('notesSaved').textContent='Saved on this device.';});}
+      }
     }
     apply();setTimeout(apply,250);setTimeout(apply,900);
   })();
