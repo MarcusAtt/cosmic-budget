@@ -869,6 +869,38 @@ render();
 <style id="liquidSideRailFixStyles">
   .liquid-side-rail { top: 24px; transform: none; }
   @media(max-width:700px){ .liquid-side-rail { top: auto; transform: translateX(-50%); } }
+
+  /* Phase 20: keep every mobile section inside the phone viewport. */
+  @media(max-width:700px){
+    html,body{max-width:100%;overflow-x:hidden}
+    .wrap{width:100%;max-width:100%;padding-left:12px;padding-right:12px}
+    .top,.top>div:last-child{width:100%;max-width:100%}
+    .top>div:last-child{display:grid!important;grid-template-columns:minmax(0,1fr) auto;gap:8px!important}
+    .top>div:last-child label{grid-column:1/-1}
+    .top>div:last-child .month{width:100%;min-width:0}
+    .top>div:last-child .ghost{min-width:0;padding-left:12px;padding-right:12px}
+    .hero{width:100%;min-width:0;gap:18px;align-items:flex-start}
+    .hero>div:first-child{min-width:0}
+    .hero h2{font-size:clamp(31px,9vw,48px);overflow-wrap:anywhere}
+    .hero .sub{overflow-wrap:anywhere}
+    .score{flex:0 0 78px;width:78px;height:78px;font-size:21px}
+    .score small{font-size:9px}
+    .card,.panel,.phase3-outlook{min-width:0;max-width:100%;overflow:hidden}
+    .panelhead{gap:10px;flex-wrap:wrap}
+    .panelhead h3{min-width:0}
+    .panelhead .btn{margin-left:auto}
+    .row{min-width:0;flex-wrap:wrap}
+    .row .left{min-width:0;flex:1 1 150px}
+    .row .left>div:last-child{min-width:0;overflow-wrap:anywhere}
+    .amount{margin-left:auto;max-width:100%;overflow-wrap:anywhere}
+    .phase3-outlook .outlook-head{min-width:0}
+    .phase3-outlook .phase3-pill{white-space:normal}
+    .phase3-metric{min-width:0}
+    .phase3-metric strong{font-size:20px;overflow-wrap:anywhere}
+    .settings-tools,.settings-tools>*{min-width:0;max-width:100%}
+    input,select,textarea,button{max-width:100%}
+    .notes-panel{max-width:calc(100vw - 24px)}
+  }
 </style>
 <script>
   (function () {
