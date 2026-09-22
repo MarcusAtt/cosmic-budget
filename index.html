@@ -107,6 +107,18 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     new MutationObserver(sync).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
   })();
 </script>
+<style id="phase32FocusStyles">
+  :where(button, a, input, textarea, select):focus-visible{outline:3px solid rgba(255,107,53,.9);outline-offset:3px;box-shadow:0 0 0 6px rgba(255,177,95,.22)}
+  .tab:focus-visible{border-radius:12px;color:var(--ink);background:rgba(255,255,255,.72)}
+  .notes-fab:focus-visible{outline-color:#fff;box-shadow:0 0 0 6px rgba(255,107,53,.3),0 12px 30px #f04b2866}
+</style>
+<script id="phase32FocusLabels">
+  (function(){
+    var map=[['#calendarBtn','Choose tracking month'],['.ghost','Action button']];
+    var calendar=document.querySelector('#calendarBtn');if(calendar)calendar.setAttribute('aria-label','Choose tracking month');
+    document.querySelectorAll('.notes-fab').forEach(function(button){button.setAttribute('aria-label','Open notes');});
+  })();
+</script>
 <script id="phase24CleanStart">
   (function(){
     if(localStorage.getItem('cosmic-budget-public')||typeof s==='undefined'||!Array.isArray(s.tx)||!s.tx.length)return;
