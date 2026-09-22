@@ -61,6 +61,15 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     setTimeout(bindAboutToolbar, 700);
   })();
 </script>
+<script id="phase24CleanStart">
+  (function(){
+    if(localStorage.getItem('cosmic-budget-public')||typeof s==='undefined'||!Array.isArray(s.tx)||!s.tx.length)return;
+    s={income:0,weekly:0,tx:[],inv:[]};
+    localStorage.setItem('cosmic-budget-public',JSON.stringify(s));
+    if(typeof render==='function')render();
+    if(typeof renderLifetime==='function')renderLifetime();
+  })();
+</script>
 <style id="phase14UsabilityStyles">
   .liquid-side-button:focus-visible,.tab:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #ff8a4c;outline-offset:3px}
   .liquid-side-button{transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
