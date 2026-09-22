@@ -213,6 +213,14 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     else init();
   })();
 </script>
+<script id="phase43ReducedMotion">
+  (function(){
+    var style=document.createElement('style');
+    style.id='phase43ReducedMotionStyles';
+    style.textContent='@media (prefers-reduced-motion: reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0ms!important}.notes-panel,.calendar-panel{scroll-behavior:auto!important}}';
+    document.head.appendChild(style);
+  })();
+</script>
 <script id="phase24CleanStart">
   (function(){
     if(localStorage.getItem('cosmic-budget-public')||typeof s==='undefined'||!Array.isArray(s.tx)||!s.tx.length)return;
