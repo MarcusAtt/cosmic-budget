@@ -121,6 +121,7 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
       window.phase19RefreshMoneyCoach();
       if(typeof window.render==='function'&&!window.phase19RenderBound){var phase19OldRender=window.render;window.render=function(){phase19OldRender();if(window.phase17RefreshCategoryPulse)window.phase17RefreshCategoryPulse();window.phase19RefreshMoneyCoach();};window.phase19RenderBound=true;}
       var compareLabels=['Buy now','Wait 1 week','Wait 1 month'];document.querySelectorAll('#whatif .row button').forEach(function(button,index){if(compareLabels[index]){button.textContent=compareLabels[index];button.setAttribute('aria-label','Compare '+compareLabels[index].toLowerCase());}});
+      if(!document.querySelector('link[rel="manifest"]')){var manifestLink=document.createElement('link');manifestLink.rel='manifest';manifestLink.href='manifest.json';document.head.appendChild(manifestLink);}if(!document.querySelector('meta[name="theme-color"]')){var themeMeta=document.createElement('meta');themeMeta.name='theme-color';themeMeta.content='#ff6b35';document.head.appendChild(themeMeta);}
       var exportButton=document.getElementById('staticExport');
       if(exportButton&&!exportButton.dataset.statusBound){exportButton.dataset.statusBound='true';exportButton.addEventListener('click',function(){var status=document.getElementById('phase15DataStatus');if(status)status.innerHTML='<b>Backup ready</b><br>Your budget backup was exported from this browser.';});}
       var importInput=document.getElementById('staticImportFile');
