@@ -150,6 +150,28 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     window.setInterval(mark,1000);
   })();
 </script>
+<script id="phase39TabStatus">
+  (function(){
+    function init(){
+      if(document.getElementById('phase39TabStatusRegion'))return;
+      var status=document.createElement('div');
+      status.id='phase39TabStatusRegion';
+      status.setAttribute('role','status');
+      status.setAttribute('aria-live','polite');
+      status.setAttribute('aria-atomic','true');
+      status.style.cssText='position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0';
+      document.body.appendChild(status);
+      function announce(tab){if(tab)status.textContent=(tab.textContent||'').trim()+' selected';}
+      announce(document.querySelector('.tab.active,[role="tab"][aria-selected="true"]'));
+      document.addEventListener('click',function(event){
+        var tab=event.target.closest&&event.target.closest('.tab,[role="tab"]');
+        if(tab)window.setTimeout(function(){announce(tab);},0);
+      });
+    }
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
+    else init();
+  })();
+</script>
 <script id="phase24CleanStart">
   (function(){
     if(localStorage.getItem('cosmic-budget-public')||typeof s==='undefined'||!Array.isArray(s.tx)||!s.tx.length)return;
