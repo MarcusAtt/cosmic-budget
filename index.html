@@ -80,6 +80,33 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     new MutationObserver(sync).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
   })();
 </script>
+<script id="phase31KeyboardTabs">
+  (function(){
+    var ids=['budget','invest','lifetime','whatif','settings'];
+    function wire(){
+      var tabs=Array.prototype.slice.call(document.querySelectorAll('.tabs .tab'));
+      tabs.forEach(function(tab,index){
+        if(tab.dataset.phase31Ready)return;
+        tab.dataset.phase31Ready='1';
+        tab.addEventListener('keydown',function(event){
+          var next=index;
+          if(event.key==='ArrowRight'||event.key==='ArrowDown')next=(index+1)%tabs.length;
+          else if(event.key==='ArrowLeft'||event.key==='ArrowUp')next=(index-1+tabs.length)%tabs.length;
+          else if(event.key==='Home')next=0;
+          else if(event.key==='End')next=tabs.length-1;
+          else return;
+          event.preventDefault();
+          tabs[next].focus();
+          tabs[next].click();
+        });
+      });
+      tabs.forEach(function(tab){tab.tabIndex=tab.classList.contains('active')?0:-1;});
+    }
+    function sync(){wire();var tabs=Array.prototype.slice.call(document.querySelectorAll('.tabs .tab'));tabs.forEach(function(tab){tab.tabIndex=tab.classList.contains('active')?0:-1;});}
+    sync();
+    new MutationObserver(sync).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+  })();
+</script>
 <script id="phase24CleanStart">
   (function(){
     if(localStorage.getItem('cosmic-budget-public')||typeof s==='undefined'||!Array.isArray(s.tx)||!s.tx.length)return;
