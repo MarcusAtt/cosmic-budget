@@ -345,6 +345,28 @@ render();
     };
   })();
 </script>
+<style id="phase18UsabilityStyles">
+  .phase18-helper{margin:8px 0 0;color:var(--muted);font-size:13px;line-height:1.45}
+  .phase18-toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);background:rgba(24,32,79,.94);color:#fff;padding:12px 16px;border-radius:999px;box-shadow:0 12px 30px #18204f33;font-weight:750;opacity:0;pointer-events:none;z-index:30;transition:opacity .2s,transform .2s}
+  .phase18-toast.is-visible{opacity:1;transform:translate(-50%,0)}
+  .phase18-empty{padding:18px 0;color:var(--muted);line-height:1.5}
+  .phase18-empty b{display:block;color:var(--ink);margin-bottom:4px}
+  body.dark .phase18-toast{background:#f6f2ff;color:#22213a}
+</style>
+<script id="phase18Usability">
+  (function(){
+    document.querySelectorAll('button').forEach(function(button){
+      if(button.textContent.trim()==='+ Add expense'){button.textContent='+ Add activity';button.setAttribute('aria-label','Add activity');}
+    });
+    var recent=document.querySelector('#budget .panel:first-child .panelhead');
+    if(recent&&!document.querySelector('#phase18ActivityHelper')){var helper=document.createElement('p');helper.id='phase18ActivityHelper';helper.className='phase18-helper';helper.textContent='Add income or spending as it happens. Categories are suggested for you.';recent.parentNode.insertBefore(helper,recent.nextSibling);}
+    var toast=document.createElement('div');toast.id='phase18Toast';toast.className='phase18-toast';toast.setAttribute('role','status');document.body.appendChild(toast);var toastTimer;
+    window.phase18Toast=function(message){toast.textContent=message;toast.classList.add('is-visible');clearTimeout(toastTimer);toastTimer=setTimeout(function(){toast.classList.remove('is-visible')},2200)};
+    if(typeof window.saveExpense==='function'){var oldSaveExpense=window.saveExpense;window.saveExpense=function(event){var name=document.getElementById('expenseName'),before=name&&name.value.trim();oldSaveExpense(event);if(before)window.phase18Toast('Activity saved to this month.');};}
+    if(typeof window.saveNotes==='function'){var oldSaveNotes=window.saveNotes;window.saveNotes=function(){oldSaveNotes();window.phase18Toast('Note saved on this device.');};}
+    if(typeof window.render==='function'){var oldRender=window.render;window.render=function(){oldRender();var activity=document.getElementById('activity');if(activity&&!activity.children.length){activity.innerHTML='<div class="phase18-empty"><b>Your activity will appear here.</b>Start by adding income or a purchase above.</div>';}};window.render();}
+  })();
+</script>
 <script id="phase11ContributionEdit">
 (function(){
   var modal=document.createElement('div');modal.id='contributionEditModal';modal.style.cssText='position:fixed;inset:0;z-index:10004;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(31,24,75,.24);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)';
