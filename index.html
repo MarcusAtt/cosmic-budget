@@ -136,7 +136,7 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
 <script id="phase35LiveAnnouncements">
   (function(){
     function mark(){
-      ['phase3Pill','phase3Note','phase17CategoryRows','phase19CoachText','whatIfResult','activityDeleteMessage','totalInvested','monthInvested','weekly','count','goalProgress','goalProgressValue','goalProgressNote'].forEach(function(id){
+      ['phase3Pill','phase3Note','phase17CategoryRows','phase19CoachText','whatIfResult','waitResult','notesSaved','activityDeleteMessage','totalInvested','monthInvested','weekly','count','goalProgress','goalProgressValue','goalProgressNote'].forEach(function(id){
         var node=document.getElementById(id);
         if(node)node.setAttribute('aria-live','polite');
       });
