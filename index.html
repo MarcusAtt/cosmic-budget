@@ -133,6 +133,22 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     });
   })();
 </script>
+<script id="phase35LiveAnnouncements">
+  (function(){
+    function mark(){
+      ['phase3Pill','phase3Note','phase17CategoryRows','phase19CoachText','whatIfResult','activityDeleteMessage'].forEach(function(id){
+        var node=document.getElementById(id);
+        if(node)node.setAttribute('aria-live','polite');
+      });
+      document.querySelectorAll('#activity,#cats,#goalProgress,#recurringList,#notesPanel').forEach(function(node){
+        if(!node.hasAttribute('aria-live'))node.setAttribute('aria-live','polite');
+      });
+    }
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mark);
+    else mark();
+    new MutationObserver(mark).observe(document.documentElement,{childList:true,subtree:true});
+  })();
+</script>
 <script id="phase24CleanStart">
   (function(){
     if(localStorage.getItem('cosmic-budget-public')||typeof s==='undefined'||!Array.isArray(s.tx)||!s.tx.length)return;
