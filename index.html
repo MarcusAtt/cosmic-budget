@@ -61,6 +61,25 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     setTimeout(bindAboutToolbar, 700);
   })();
 </script>
+<script id="phase30TabNames">
+  (function(){
+    var ids=['budget','invest','lifetime','whatif','settings'];
+    function sync(){
+      var tabs=Array.prototype.slice.call(document.querySelectorAll('.tabs .tab'));
+      tabs.forEach(function(tab,index){
+        if(!tab.id) tab.id=ids[index]+'Tab';
+        var panel=document.getElementById(ids[index]);
+        if(!panel)return;
+        panel.setAttribute('aria-labelledby',tab.id);
+        panel.setAttribute('role','tabpanel');
+        tab.setAttribute('aria-controls',panel.id);
+        tab.setAttribute('aria-selected',tab.classList.contains('active')?'true':'false');
+      });
+    }
+    sync();
+    new MutationObserver(sync).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+  })();
+</script>
 <script id="phase24CleanStart">
   (function(){
     if(localStorage.getItem('cosmic-budget-public')||typeof s==='undefined'||!Array.isArray(s.tx)||!s.tx.length)return;
