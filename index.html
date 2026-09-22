@@ -183,6 +183,15 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
       link.style.cssText='position:fixed;z-index:20;left:16px;top:12px;padding:10px 14px;border-radius:12px;background:#ff6b35;color:#fff;font-weight:800;text-decoration:none;transform:translateY(-160%);transition:transform .18s ease;box-shadow:0 8px 24px rgba(240,75,40,.28)';
       link.addEventListener('focus',function(){link.style.transform='translateY(0)';});
       link.addEventListener('blur',function(){link.style.transform='translateY(-160%)';});
+      link.addEventListener('click',function(event){
+        var target=document.getElementById('budget');
+        if(!target)return;
+        event.preventDefault();
+        target.setAttribute('tabindex','-1');
+        target.focus({preventScroll:true});
+        target.scrollIntoView({block:'start'});
+        history.replaceState(null,'','#budget');
+      });
       document.body.prepend(link);
     }
     if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
