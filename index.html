@@ -61,6 +61,25 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     setTimeout(bindAboutToolbar, 700);
   })();
 </script>
+<style id="phase14UsabilityStyles">
+  .liquid-side-button:focus-visible,.tab:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #ff8a4c;outline-offset:3px}
+  .liquid-side-button{transition:transform .18s ease,background .18s ease,box-shadow .18s ease}
+  .liquid-side-button:hover{transform:translateY(-2px)}
+  #phase13Welcome{border-color:rgba(255,107,53,.28)}
+  #phase14Tip{margin:18px 0 0;padding:12px 14px;border-radius:16px;background:rgba(255,240,231,.72);color:#25304f;font-size:13px;line-height:1.45}
+  @media(max-width:700px){.liquid-side-rail{padding:8px;gap:6px}.liquid-side-button{min-width:52px;min-height:52px}.tabs{overflow-x:auto;flex-wrap:nowrap;padding-bottom:6px}.tab{flex:0 0 auto}}
+</style>
+<script id="phase14Usability">
+  (function(){
+    function apply(){
+      var labels={liquidProfileButton:'Profile',liquidSettingsButton:'Settings',liquidAboutButton:'About'};
+      Object.keys(labels).forEach(function(id){var el=document.getElementById(id);if(el){el.setAttribute('aria-label',labels[id]);el.title=labels[id];}});
+      var welcome=document.getElementById('phase13Welcome');
+      if(welcome&&!document.getElementById('phase14Tip')){var tip=document.createElement('p');tip.id='phase14Tip';tip.innerHTML='<b>Helpful rhythm:</b> add income first, then log activity as it happens. Your outlook and category totals update automatically.';welcome.appendChild(tip);}
+    }
+    apply();setTimeout(apply,250);setTimeout(apply,900);
+  })();
+</script>
 
 <script>
 (function(){
