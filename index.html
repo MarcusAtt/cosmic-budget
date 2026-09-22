@@ -239,6 +239,28 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     new MutationObserver(mark).observe(document.documentElement,{childList:true,subtree:true});
   })();
 </script>
+<script id="phase45DialogFocusReturn">
+  (function(){
+    var lastTrigger=null,wasOpen=new WeakMap();
+    function open(dialog){
+      var style=getComputedStyle(dialog);
+      return !dialog.classList.contains('hidden')&&style.display!=='none'&&style.visibility!=='hidden';
+    }
+    document.addEventListener('click',function(event){
+      var trigger=event.target.closest&&event.target.closest('button,a,[role="button"]');
+      if(trigger&&!trigger.closest('[role="dialog"]'))lastTrigger=trigger;
+    },true);
+    function watch(){
+      document.querySelectorAll('[role="dialog"]').forEach(function(dialog){
+        var now=open(dialog),before=wasOpen.get(dialog);
+        if(before===true&&now===false&&lastTrigger&&document.contains(lastTrigger)){lastTrigger.focus();lastTrigger=null;}
+        wasOpen.set(dialog,now);
+      });
+    }
+    watch();
+    new MutationObserver(watch).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style']});
+  })();
+</script>
 <script id="phase24CleanStart">
   (function(){
     if(localStorage.getItem('cosmic-budget-public')||typeof s==='undefined'||!Array.isArray(s.tx)||!s.tx.length)return;
