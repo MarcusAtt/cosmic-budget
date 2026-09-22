@@ -111,6 +111,7 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
       if(settingsTools&&!document.getElementById('phase16CategoryLimits')){var limits=document.createElement('article');limits.id='phase16CategoryLimits';limits.className='panel';limits.innerHTML='<h3>Category limits</h3><p class="muted">Set gentle monthly guardrails for the categories you use most.</p><div class="phase16-limit-grid">'+['Housing','Food','Transport','Fun','Health','Other'].map(function(name){return '<label>'+name+'<input type="number" min="0" step="1" data-category-limit="'+name+'" placeholder="No limit"></label>';}).join('')+'</div><button class="btn" id="phase16SaveLimits">Save limits</button><p id="phase16CategoryStatus" role="status"></p>';limits.style.gridColumn='1 / -1';settingsTools.appendChild(limits);var savedLimits={};try{savedLimits=JSON.parse(localStorage.getItem('cosmic-budget-category-limits')||'{}')}catch(_){savedLimits={}};limits.querySelectorAll('[data-category-limit]').forEach(function(input){if(savedLimits[input.dataset.categoryLimit])input.value=savedLimits[input.dataset.categoryLimit];});}
       var saveLimits=document.getElementById('phase16SaveLimits');
       if(saveLimits&&!saveLimits.dataset.bound){saveLimits.dataset.bound='true';saveLimits.addEventListener('click',function(){var values={};document.querySelectorAll('[data-category-limit]').forEach(function(input){if(Number(input.value)>0)values[input.dataset.categoryLimit]=Number(input.value);});localStorage.setItem('cosmic-budget-category-limits',JSON.stringify(values));var status=document.getElementById('phase16CategoryStatus');if(status)status.textContent='Category limits saved on this device.';if(window.phase17RefreshCategoryPulse)window.phase17RefreshCategoryPulse();});}
+      if(new URLSearchParams(location.search).has('phone-preview')){document.body.classList.add('phone-preview-mode');setTimeout(function(){var phoneRail=document.querySelector('aside.liquid-side-rail');if(phoneRail)phoneRail.style.setProperty('display','none','important')},1200)}
       var budget=document.getElementById('budget'),outlook=document.getElementById('phase3Outlook');
       if(budget&&!document.getElementById('phase17CategoryPulse')){var pulse=document.createElement('section');pulse.id='phase17CategoryPulse';pulse.className='panel';pulse.innerHTML='<h3>Category pulse</h3><p class="muted">See how this month is tracking against your personal guardrails.</p><div id="phase17CategoryRows"></div>';if(outlook)budget.insertBefore(pulse,outlook);else{var content=budget.querySelector('.content');if(content)budget.insertBefore(pulse,content);else budget.appendChild(pulse);}}
       window.phase17RefreshCategoryPulse=function(){var rows=document.getElementById('phase17CategoryRows');if(!rows)return;var limits={};try{limits=JSON.parse(localStorage.getItem('cosmic-budget-category-limits')||'{}')}catch(_){limits={}};var names=Object.keys(limits),raw={},data,savedMonth=localStorage.getItem('cosmic-budget-month')||'';try{raw=JSON.parse(localStorage.getItem('cosmic-budget-public')||'{}');data=raw.s||raw}catch(_){data={tx:[]}};if(!names.length){rows.innerHTML='<p class="muted">Set category limits in Settings to see progress here.</p>';return;}var tx=Array.isArray(data.tx)?data.tx:[],totals={};tx.forEach(function(item){var month=item[4]||savedMonth;if(month===savedMonth&&!item[3])totals[item[2]||'Other']=(totals[item[2]||'Other']||0)+Number(item[1]||0);});rows.innerHTML=names.map(function(name){var limit=Number(limits[name])||0,spent=Number(totals[name]||0),ratio=limit?spent/limit:0,pct=Math.min(100,Math.round(ratio*100)),state=ratio>=1?'over':ratio>=.8?'warn':'';return '<div class="phase17-limit-row '+state+'"><div class="phase17-limit-head"><span>'+name+'</span><span>'+new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(spent)+' / '+new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(limit)+'</span></div><div class="phase17-limit-track"><i style="width:'+pct+'%"></i></div><div class="phase17-limit-meta">'+(ratio>=1?'Over your limit':ratio>=.8?'Close to your limit':pct+'% of limit used')+'</div></div>';}).join('');};
@@ -900,6 +901,28 @@ render();
     .settings-tools,.settings-tools>*{min-width:0;max-width:100%}
     input,select,textarea,button{max-width:100%}
     .notes-panel{max-width:calc(100vw - 24px)}
+  }
+  .phone-preview-mode .liquid-side-rail{display:none!important}
+  @media(max-width:700px){
+    .phone-preview-mode .wrap{padding-bottom:32px}
+    .phone-preview-mode .top{gap:10px}
+    .phone-preview-mode .brand{width:100%;min-width:0}
+    .phone-preview-mode .brand h1{font-size:25px;white-space:nowrap}
+    .phone-preview-mode .hero{padding:22px 18px;border-radius:22px}
+    .phone-preview-mode .hero h2{font-size:clamp(30px,8.5vw,44px)}
+    .phone-preview-mode .score{flex-basis:72px;width:72px;height:72px;font-size:19px}
+    .phone-preview-mode .card,.phone-preview-mode .panel{padding:18px;border-radius:18px}
+    .phone-preview-mode .card strong{font-size:28px}
+    .phone-preview-mode .card .ghost{margin-top:10px}
+    .phone-preview-mode .content{gap:12px}
+    .phone-preview-mode .notes-fab{bottom:16px;right:14px}
+    .phone-preview-mode button,.phone-preview-mode .tab,.phone-preview-mode input,.phone-preview-mode select{min-height:44px}
+    .phone-preview-mode .tab{padding:11px 5px!important}
+    .phone-preview-mode .btn,.phone-preview-mode .ghost{white-space:normal;line-height:1.15}
+    .phone-preview-mode [role="dialog"]{padding:14px!important}
+    .phone-preview-mode [role="dialog"]>div{width:100%!important;max-height:calc(100vh - 28px);overflow:auto;padding:20px!important;border-radius:22px!important}
+    .phone-preview-mode .budget-glass-actions,.phone-preview-mode .phase12-actions,.phone-preview-mode .delete-actions{flex-direction:column;gap:8px}
+    .phone-preview-mode .budget-glass-actions button,.phone-preview-mode .phase12-actions button,.phone-preview-mode .delete-actions button{width:100%;margin:0}
   }
 </style>
 <script>
