@@ -40,6 +40,29 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
 </form>
 </dialog>
 <script>
+  (function () {
+    function bindAboutToolbar() {
+      var button = document.getElementById('liquidAboutButton');
+      if (!button || button.dataset.aboutBound === 'true') return;
+      button.dataset.aboutBound = 'true';
+      button.setAttribute('aria-label', 'About');
+      button.title = 'About';
+      button.addEventListener('click', function () {
+        var settingsTab = document.getElementById('settingsTab');
+        if (settingsTab) settingsTab.click();
+        button.classList.add('active');
+        setTimeout(function () {
+          var about = document.getElementById('phase13About');
+          if (about) about.scrollIntoView({behavior:'smooth', block:'center'});
+        }, 180);
+      });
+    }
+    setTimeout(bindAboutToolbar, 120);
+    setTimeout(bindAboutToolbar, 700);
+  })();
+</script>
+
+<script>
 (function(){
 function categoryFor(name){let n=name.toLowerCase();if(/rent|mortgage|home|housing/.test(n))return'Housing';if(/grocery|groceries|food|restaurant|coffee|lunch|dinner/.test(n))return'Food';if(/gas|fuel|uber|lyft|bus|train|parking/.test(n))return'Transport';if(/movie|game|concert|fun|hobby|shopping/.test(n))return'Fun';if(/doctor|medical|medicine|pharmacy|health/.test(n))return'Health';return'Other'}
 window.openExpense=function(i){i=i===undefined?-1:i;$('expenseDialogTitle').textContent=i<0?'Add expense':'Edit activity';$('expenseIndex').value=i;$('expenseName').value=i<0?'':s.tx[i][0];$('expenseAmount').value=i<0?'':s.tx[i][1];$('expenseCategory').value=i<0?'Other':s.tx[i][2];$('expenseDialog').showModal()};
