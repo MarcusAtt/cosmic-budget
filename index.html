@@ -261,6 +261,25 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     new MutationObserver(watch).observe(document.documentElement,{subtree:true,childList:true,attributes:true,attributeFilter:['class','style']});
   })();
 </script>
+<script id="phase46DialogFocusTrap">
+  (function(){
+    function isOpen(dialog){
+      var style=getComputedStyle(dialog);
+      return !dialog.classList.contains('hidden')&&style.display!=='none'&&style.visibility!=='hidden';
+    }
+    document.addEventListener('keydown',function(event){
+      if(event.key!=='Tab')return;
+      var dialog=Array.prototype.find.call(document.querySelectorAll('[role="dialog"]'),isOpen);
+      if(!dialog)return;
+      var focusable=Array.prototype.slice.call(dialog.querySelectorAll('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])')).filter(function(el){return !el.disabled&&el.getAttribute('aria-hidden')!=='true';});
+      if(!focusable.length)return;
+      var first=focusable[0],last=focusable[focusable.length-1],active=document.activeElement;
+      if(event.shiftKey&&active===first){event.preventDefault();last.focus();}
+      else if(!event.shiftKey&&active===last){event.preventDefault();first.focus();}
+      else if(!dialog.contains(active)){event.preventDefault();first.focus();}
+    },true);
+  })();
+</script>
 <script id="phase24CleanStart">
   (function(){
     if(localStorage.getItem('cosmic-budget-public')||typeof s==='undefined'||!Array.isArray(s.tx)||!s.tx.length)return;
