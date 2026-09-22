@@ -198,6 +198,21 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     else init();
   })();
 </script>
+<script id="phase42RememberedTab">
+  (function(){
+    var key='cosmic-budget-active-tab';
+    function init(){
+      document.addEventListener('click',function(event){
+        var tab=event.target.closest&&event.target.closest('.tab,[role="tab"]');
+        if(tab&&tab.id)localStorage.setItem(key,tab.id);
+      });
+      var saved=localStorage.getItem(key),tab=saved&&document.getElementById(saved);
+      if(tab&&tab.getAttribute('aria-selected')!=='true')tab.click();
+    }
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
+    else init();
+  })();
+</script>
 <script id="phase24CleanStart">
   (function(){
     if(localStorage.getItem('cosmic-budget-public')||typeof s==='undefined'||!Array.isArray(s.tx)||!s.tx.length)return;
