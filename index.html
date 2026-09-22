@@ -100,6 +100,7 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     tabs.forEach(function(tab){new MutationObserver(sync).observe(tab,{attributes:true,attributeFilter:['class']});});
     var tabContainer=document.querySelector('.tabs');
     if(tabContainer)new MutationObserver(function(){tabs=Array.prototype.slice.call(document.querySelectorAll('.tab'));tabs.forEach(function(tab){if(!tab.dataset.phase27Observed){tab.dataset.phase27Observed='1';new MutationObserver(sync).observe(tab,{attributes:true,attributeFilter:['class']});}});sync();}).observe(tabContainer,{childList:true,subtree:true});
+    new MutationObserver(function(){tabs=Array.prototype.slice.call(document.querySelectorAll('.tab'));sync();}).observe(document.body,{childList:true,subtree:true});
     document.addEventListener('click',function(event){if(event.target.closest&&event.target.closest('.tab'))setTimeout(sync,0);});
     sync();
   })();
