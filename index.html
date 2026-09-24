@@ -61,6 +61,17 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     setTimeout(bindAboutToolbar, 700);
   })();
 </script>
+<script id="phase70ActivityFinderKeyboard">
+  (function(){
+    function bind(){
+      var search=document.getElementById('phase68ActivitySearch'),clear=document.getElementById('phase69ActivityClear');if(!search||search.dataset.phase70Ready)return false;search.dataset.phase70Ready='1';
+      document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement!==search&&document.activeElement.tagName!=='INPUT'&&document.activeElement.tagName!=='TEXTAREA'&&document.activeElement.tagName!=='SELECT'){e.preventDefault();search.focus()}if(e.key==='Escape'&&document.activeElement===search&&search.value){search.value='';search.dispatchEvent(new Event('input',{bubbles:true}))}});
+      if(clear)clear.title='Clear filters (Esc)';search.title='Press / to focus · Esc to clear';return true;
+    }
+    function start(){if(!bind())setTimeout(start,500)}
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+  })();
+</script>
 <style id="phase69ActivityFinderStyles">
   #phase68ActivityTools{grid-template-columns:minmax(0,1fr) 150px auto;align-items:center}
   #phase69ActivityCount{color:#68708f;font-size:11px;font-weight:800;white-space:nowrap}
