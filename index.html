@@ -1647,3 +1647,38 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
     };
   })();
 </script>
+<style id="phase73AboutPageStyles">
+  #phase73AboutPage{max-width:760px;margin:0 auto}
+  #phase73AboutPage .phase73-about-hero{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:28px;border-radius:28px;background:linear-gradient(135deg,#3f367f,#7f74c4);color:#fff;box-shadow:0 18px 45px rgba(55,43,107,.2),inset 0 1px rgba(255,255,255,.24)}
+  #phase73AboutPage .phase73-eyebrow{margin:0 0 7px;color:#ffb15f;font-size:11px;font-weight:900;letter-spacing:.15em}
+  #phase73AboutPage h2{margin:0;font-size:clamp(30px,6vw,48px);letter-spacing:-.05em;line-height:1.02}
+  #phase73AboutPage .phase73-sub{margin:12px 0 0;color:rgba(255,255,255,.82);line-height:1.45}
+  #phase73AboutPage .phase73-orb{display:grid;place-items:center;flex:none;width:94px;height:94px;border-radius:50%;background:linear-gradient(145deg,#ff6b35,#ff9f1c);font-size:35px;box-shadow:0 12px 28px rgba(255,107,53,.3);border:2px solid rgba(255,255,255,.6)}
+  #phase73AboutPage .phase73-card{margin-top:16px;padding:23px;border:1px solid rgba(255,255,255,.94);border-radius:25px;background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(255,246,236,.72));box-shadow:0 16px 38px rgba(55,43,107,.1),inset 0 1px rgba(255,255,255,.98);color:#18204f}
+  #phase73AboutPage .phase73-card h3{margin:0 0 5px;font-size:21px}.phase73-note{margin:0;color:#586486;line-height:1.45}
+  #phase73AboutPage .phase73-fields{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:18px}
+  #phase73AboutPage label{display:block;color:#586486;font-size:12px;font-weight:800}#phase73AboutPage label.phase73-wide{grid-column:1/-1}
+  #phase73AboutPage input,#phase73AboutPage textarea{display:block;width:100%;box-sizing:border-box;margin-top:7px;padding:12px 13px;border:1px solid rgba(203,198,219,.72);border-radius:15px;background:rgba(255,255,255,.75);color:#18204f;font:inherit;outline:0;resize:vertical}#phase73AboutPage textarea{min-height:86px}
+  #phase73AboutPage input:focus,#phase73AboutPage textarea:focus{border-color:#ff6b35;box-shadow:0 0 0 3px rgba(255,107,53,.14)}
+  #phase73AboutPage .phase73-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:15px}#phase73AboutPage button{border:0;border-radius:14px;padding:11px 15px;background:linear-gradient(135deg,#ff6b35,#ff9f1c);color:#fff;font:inherit;font-weight:800;cursor:pointer;box-shadow:0 10px 20px rgba(255,107,53,.18)}#phase73AboutPage .phase73-status{margin:0;color:#d84d22;font-size:12px;font-weight:800}
+  @media(max-width:620px){#phase73AboutPage .phase73-about-hero{padding:22px;align-items:flex-start}#phase73AboutPage .phase73-orb{width:68px;height:68px;font-size:25px}#phase73AboutPage .phase73-fields{grid-template-columns:1fr}#phase73AboutPage label.phase73-wide{grid-column:auto}}
+</style>
+<script id="phase73AboutPage">
+  (function(){
+    function start(){
+      var tabs=document.querySelector('.tabs'),main=document.querySelector('main.wrap'),settings=document.getElementById('settings');if(!tabs||!main||!settings)return false;
+      var old=document.getElementById('phase72About');if(old)old.remove();var legacy=document.getElementById('phase13About');if(legacy)legacy.remove();
+      var tab=document.getElementById('phase73AboutTab');if(!tab){tab=document.createElement('button');tab.type='button';tab.className='tab';tab.id='phase73AboutTab';tab.textContent='About';tabs.appendChild(tab)}
+      var page=document.getElementById('phase73AboutPage');if(!page){page=document.createElement('section');page.id='phase73AboutPage';page.className='hidden';page.innerHTML='<div class="phase73-about-hero"><div><p class="phase73-eyebrow">YOUR SPACE</p><h2>About you.</h2><p class="phase73-sub">A private little corner for the reason behind your plan.</p></div><div class="phase73-orb" aria-hidden="true">✦</div></div><article class="phase73-card"><h3>Make it feel personal</h3><p class="phase73-note">These details stay in this browser. Add a reminder of what you are building toward, then come back whenever you need a little context.</p><div class="phase73-fields"><label>What should we call you?<input id="phase73AboutName" maxlength="60" placeholder="Your name or nickname"></label><label>What are you working toward?<input id="phase73AboutFocus" maxlength="80" placeholder="A calmer month, a trip, a goal…"></label><label class="phase73-wide">A note for future you<textarea id="phase73AboutBio" maxlength="240" placeholder="Why does this plan matter to you?"></textarea></label></div><div class="phase73-actions"><button type="button" id="phase73AboutSave">Save about me</button><p class="phase73-status" id="phase73AboutStatus" role="status" aria-live="polite"></p></div></article>';main.appendChild(page)}
+      var ids=['budget','invest','lifetime','whatif','settings','phase73AboutPage'];
+      function open(){ids.forEach(function(id){var el=document.getElementById(id);if(el)el.classList.toggle('hidden',id!=='phase73AboutPage')});document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});tab.classList.add('active');var p=document.getElementById('liquidProfileButton'),sbtn=document.getElementById('liquidSettingsButton'),ab=document.getElementById('liquidAboutButton');if(p)p.classList.remove('active');if(sbtn)sbtn.classList.remove('active');if(ab)ab.classList.add('active');page.scrollIntoView({behavior:'smooth',block:'start'})}
+      if(!tab.dataset.ready){tab.dataset.ready='1';tab.onclick=open}
+      var data={};try{data=JSON.parse(localStorage.getItem('cosmic-budget-about')||'{}')}catch(e){}
+      var name=page.querySelector('#phase73AboutName'),focus=page.querySelector('#phase73AboutFocus'),bio=page.querySelector('#phase73AboutBio');name.value=data.name||'';focus.value=data.focus||'';bio.value=data.bio||'';
+      var save=page.querySelector('#phase73AboutSave');if(!save.dataset.ready){save.dataset.ready='1';save.onclick=function(){localStorage.setItem('cosmic-budget-about',JSON.stringify({name:name.value.trim(),focus:focus.value.trim(),bio:bio.value.trim()}));page.querySelector('#phase73AboutStatus').textContent='Saved on this device.';setTimeout(function(){page.querySelector('#phase73AboutStatus').textContent=''},2400)}}
+      var ab=document.getElementById('liquidAboutButton');if(ab&&!ab.dataset.phase73Ready){ab.dataset.phase73Ready='1';ab.onclick=open;ab.setAttribute('aria-label','Open About')}
+      return true;
+    }
+    if(!start()){var tries=0,t=setInterval(function(){if(start()||++tries>80)clearInterval(t)},100)}
+  })();
+</script>
