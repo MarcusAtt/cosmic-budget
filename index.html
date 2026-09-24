@@ -151,6 +151,15 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     if(!openBudget()){var tries=0,t=setInterval(function(){if(openBudget()||++tries>100)clearInterval(t)},80)}
   })();
 </script>
+<script id="phase93LiveRegions">
+  (function(){
+    function mount(){
+      [['phase19CoachText','status'],['phase3Note','status'],['phase15DataStatus','status'],['phase16CategoryStatus','status'],['phase69ActivityClear','button']].forEach(function(pair){var el=document.getElementById(pair[0]);if(el){el.setAttribute('role',pair[1]);if(pair[1]==='status')el.setAttribute('aria-live','polite')}});
+      return true;
+    }
+    mount();setTimeout(mount,300);setTimeout(mount,1000);setTimeout(mount,2000);
+  })();
+</script>
 <style id="phase85AboutSeparationStyles">#settings #phase72About,#settings #phase13About{display:none!important}</style>
 <script id="phase85AboutSeparation">
   (function(){
