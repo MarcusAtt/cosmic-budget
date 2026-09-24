@@ -61,6 +61,27 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     setTimeout(bindAboutToolbar, 700);
   })();
 </script>
+<style id="phase69ActivityFinderStyles">
+  #phase68ActivityTools{grid-template-columns:minmax(0,1fr) 150px auto;align-items:center}
+  #phase69ActivityCount{color:#68708f;font-size:11px;font-weight:800;white-space:nowrap}
+  #phase69ActivityClear{border:1px solid rgba(255,255,255,.9);border-radius:12px;padding:9px 11px;background:rgba(255,255,255,.72);color:#273052;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+  #phase69ActivityClear:hover{border-color:#ff6b35;color:#d84d22}
+  @media(max-width:520px){#phase68ActivityTools{grid-template-columns:1fr 1fr}#phase69ActivityCount{grid-column:1;order:3}#phase69ActivityClear{grid-column:2;order:3}}
+</style>
+<script id="phase69ActivityFinderRefinement">
+  (function(){
+    function mount(){
+      var tools=document.getElementById('phase68ActivityTools'),activity=document.getElementById('activity');
+      if(!tools||!activity)return false;
+      var count=document.getElementById('phase69ActivityCount');if(!count){count=document.createElement('span');count.id='phase69ActivityCount';count.setAttribute('aria-live','polite');tools.appendChild(count)}
+      var clear=document.getElementById('phase69ActivityClear');if(!clear){clear=document.createElement('button');clear.id='phase69ActivityClear';clear.type='button';clear.textContent='Clear';clear.setAttribute('aria-label','Clear activity filters');tools.appendChild(clear);clear.onclick=function(){var q=document.getElementById('phase68ActivitySearch'),c=document.getElementById('phase68ActivityCategory');if(q){q.value='';q.dispatchEvent(new Event('input',{bubbles:true}))}if(c){c.value='';c.dispatchEvent(new Event('change',{bubbles:true}))}q&&q.focus()}}
+      function refresh(){var rows=Array.prototype.slice.call(activity.querySelectorAll('.row')),visible=rows.filter(function(r){return getComputedStyle(r).display!=='none'}).length;count.textContent=visible+' entr'+(visible===1?'y':'ies')}
+      refresh();if(!tools.dataset.phase69Observed){tools.dataset.phase69Observed='1';new MutationObserver(refresh).observe(activity,{childList:true,subtree:true,attributes:true,attributeFilter:['style']})}return true;
+    }
+    function start(){if(!mount())setTimeout(start,500)}
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+  })();
+</script>
 <style id="phase68ActivityFinderStyles">
   #phase68ActivityTools{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:9px;margin:14px 0 4px}
   #phase68ActivityTools input,#phase68ActivityTools select{width:100%;min-width:0;padding:10px 12px;border:1px solid rgba(255,255,255,.9);border-radius:14px;background:rgba(255,255,255,.72);color:#18204f;font:inherit;outline:0}
