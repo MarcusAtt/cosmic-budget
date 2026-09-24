@@ -61,6 +61,24 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     setTimeout(bindAboutToolbar, 700);
   })();
 </script>
+<style id="phase71ActivityEmptyStyles">
+  #phase71ActivityEmpty{display:none;margin:12px 0 0;padding:15px;border:1px dashed rgba(216,77,34,.35);border-radius:16px;background:rgba(255,248,239,.7);color:#586486;line-height:1.45}
+  #phase71ActivityEmpty.is-visible{display:block}
+  #phase71ActivityEmpty b{display:block;color:#273052;margin-bottom:3px}
+  #phase71ActivityEmpty button{margin-top:9px;border:0;border-radius:12px;padding:8px 11px;background:linear-gradient(135deg,#ff6b35,#ff9f1c);color:#fff;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+</style>
+<script id="phase71ActivityEmptyState">
+  (function(){
+    function mount(){
+      var tools=document.getElementById('phase68ActivityTools'),activity=document.getElementById('activity');if(!tools||!activity)return false;
+      var empty=document.getElementById('phase71ActivityEmpty');if(!empty){empty=document.createElement('div');empty.id='phase71ActivityEmpty';empty.setAttribute('role','status');empty.innerHTML='<b>No matching activity</b><span>Try another word or category, or clear the filters to see everything again.</span><br><button type="button">Clear filters</button>';var heading=activity.parentElement.querySelector('.panelhead');(heading||activity).insertAdjacentElement('afterend',empty);empty.querySelector('button').onclick=function(){var clear=document.getElementById('phase69ActivityClear');if(clear)clear.click()}}
+      function refresh(){var rows=Array.prototype.slice.call(activity.querySelectorAll('.row')),visible=rows.filter(function(r){return getComputedStyle(r).display!=='none'}).length,q=document.getElementById('phase68ActivitySearch')?.value||'',c=document.getElementById('phase68ActivityCategory')?.value||'';empty.classList.toggle('is-visible',rows.length>0&&visible===0&&!!(q.trim()||c))}
+      if(!activity.dataset.phase71Observed){activity.dataset.phase71Observed='1';new MutationObserver(refresh).observe(activity,{childList:true,subtree:true,attributes:true,attributeFilter:['style']});tools.addEventListener('input',refresh);tools.addEventListener('change',refresh)}refresh();return true;
+    }
+    function start(){if(!mount())setTimeout(start,500)}
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+  })();
+</script>
 <script id="phase70ActivityFinderKeyboard">
   (function(){
     function bind(){
