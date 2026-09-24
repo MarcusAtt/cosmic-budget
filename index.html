@@ -1722,3 +1722,22 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
     if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>80)clearInterval(t)},100)}
   })();
 </script>
+<style id="phase79SettingsOverviewStyles">
+  #phase79SettingsOverview{grid-column:1/-1;padding:18px 19px;border:1px solid rgba(255,255,255,.94);border-radius:22px;background:linear-gradient(135deg,rgba(255,255,255,.86),rgba(255,246,236,.7));box-shadow:0 14px 32px rgba(55,43,107,.09),inset 0 1px rgba(255,255,255,.96);color:#18204f}
+  #phase79SettingsOverview .phase79-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px}#phase79SettingsOverview h3{margin:0 0 4px;font-size:20px}#phase79SettingsOverview p{margin:0;color:#586486;line-height:1.4}
+  #phase79SettingsOverview .phase79-mark{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:14px;background:linear-gradient(145deg,#ff6b35,#ff9f1c);color:#fff;font-size:19px}
+  #phase79SettingsOverview .phase79-links{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:14px}
+  #phase79SettingsOverview button{min-height:43px;border:1px solid rgba(255,255,255,.94);border-radius:13px;padding:9px 10px;background:rgba(255,255,255,.7);color:#273052;font:inherit;font-size:12px;font-weight:800;cursor:pointer}#phase79SettingsOverview button:hover{border-color:#ff6b35;color:#d84d22;background:rgba(255,255,255,.9)}#phase79SettingsOverview button:focus-visible{outline:3px solid #ff6b35;outline-offset:3px}
+  @media(max-width:700px){#phase79SettingsOverview .phase79-links{grid-template-columns:1fr 1fr}}@media(max-width:400px){#phase79SettingsOverview .phase79-links{grid-template-columns:1fr}}
+</style>
+<script id="phase79SettingsOverview">
+  (function(){
+    function mount(){
+      var tools=document.querySelector('#settings .settings-tools');if(!tools)return false;
+      var box=document.getElementById('phase79SettingsOverview');if(!box){box=document.createElement('article');box.id='phase79SettingsOverview';box.innerHTML='<div class="phase79-head"><div><h3>Your setup</h3><p>Jump straight to the part of Cosmic Budget you want to tune.</p></div><div class="phase79-mark" aria-hidden="true">✦</div></div><div class="phase79-links" role="navigation" aria-label="Settings shortcuts"><button type="button" data-phase79-target="profileSettingsPanel">Profile</button><button type="button" data-phase79-target="liquidIntensity">Glassness</button><button type="button" data-phase79-target="goalName">Savings goal</button><button type="button" data-phase79-target="staticExport">Backup data</button></div>';tools.insertBefore(box,tools.firstChild)}
+      if(!box.dataset.ready){box.dataset.ready='1';box.querySelectorAll('button').forEach(function(button){button.onclick=function(){var target=document.getElementById(button.dataset.phase79Target);if(target){target.scrollIntoView({behavior:'smooth',block:'center'});if(target.focus&&/INPUT|TEXTAREA|BUTTON|SELECT/.test(target.tagName))setTimeout(function(){target.focus()},260)}else{button.setAttribute('aria-label','This setting is not available yet')}}})}
+      return true;
+    }
+    if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>80)clearInterval(t)},100)}
+  })();
+</script>
