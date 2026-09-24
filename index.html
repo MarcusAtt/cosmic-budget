@@ -75,6 +75,30 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},80)}
   })();
 </script>
+<style id="phase88ActionContrastStyles">
+  button.phase88-readable-action{color:#fff!important;border:1px solid rgba(255,255,255,.68)!important;background:linear-gradient(135deg,rgba(255,107,53,.95),rgba(255,159,28,.95))!important;box-shadow:0 10px 22px rgba(255,107,53,.18),inset 0 1px rgba(255,255,255,.5)!important;text-shadow:0 1px 1px rgba(100,38,12,.24)!important}
+  button.phase88-readable-action:hover{filter:saturate(1.08) brightness(1.04)!important}
+</style>
+<script id="phase88ActionContrastScript">
+  (function(){
+    function mount(){
+      var action=/^(save|add|edit|export|delete|reset|continue|plan|buy|apply)/i;
+      document.querySelectorAll('button').forEach(function(button){
+        if(button.classList.contains('tab')||button.classList.contains('liquid-side-button')||button.closest('.phase79-links'))return;
+        var text=(button.textContent||'').replace(/[＋+]/g,'').trim().replace(/\s+/g,' ');
+        if(action.test(text)){
+          button.classList.add('phase88-readable-action');
+          button.style.setProperty('background','linear-gradient(135deg,rgba(255,107,53,.95),rgba(255,159,28,.95))','important');
+          button.style.setProperty('color','#fff','important');
+          button.style.setProperty('border-color','rgba(255,255,255,.68)','important');
+          button.style.setProperty('text-shadow','0 1px 1px rgba(100,38,12,.24)','important');
+        }
+      });
+      return true;
+    }
+    mount();setTimeout(mount,250);setTimeout(mount,900);setTimeout(mount,1800);
+  })();
+</script>
 <style id="phase85AboutSeparationStyles">#settings #phase72About,#settings #phase13About{display:none!important}</style>
 <script id="phase85AboutSeparation">
   (function(){
