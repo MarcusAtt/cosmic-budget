@@ -40,7 +40,7 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
 </form>
 </dialog>
 <script>
-  (function () {
+(function () {
     function bindAboutToolbar() {
       var button = document.getElementById('liquidAboutButton');
       if (!button || button.dataset.aboutBound === 'true') return;
@@ -59,6 +59,43 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     }
     setTimeout(bindAboutToolbar, 120);
     setTimeout(bindAboutToolbar, 700);
+  })();
+</script>
+<style id="phase72AboutSettingsStyles">
+  #phase72About{grid-column:1/-1;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(255,255,255,.9),rgba(255,246,236,.72));border:1px solid rgba(255,255,255,.94);box-shadow:0 18px 42px rgba(55,43,107,.11),inset 0 1px rgba(255,255,255,.98)}
+  #phase72About:before{content:'';position:absolute;inset:auto -44px -68px auto;width:190px;height:190px;border-radius:50%;background:radial-gradient(circle,rgba(255,159,28,.26),rgba(255,107,53,0) 68%);pointer-events:none}
+  #phase72About .phase72-about-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
+  #phase72About h3{margin:0 0 5px;font-size:21px;color:#18204f}
+  #phase72About .phase72-kicker{margin:0 0 4px;color:#d84d22;font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+  #phase72About .phase72-copy{margin:0;color:#586486;line-height:1.45;max-width:620px}
+  #phase72About .phase72-badge{display:grid;place-items:center;flex:none;width:54px;height:54px;border-radius:18px;background:linear-gradient(145deg,#ff6b35,#ff9f1c);color:#fff;font-size:24px;box-shadow:0 10px 22px rgba(255,107,53,.2)}
+  #phase72About .phase72-fields{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:18px}
+  #phase72About label{display:block;color:#586486;font-size:12px;font-weight:800}
+  #phase72About label.phase72-wide{grid-column:1/-1}
+  #phase72About input,#phase72About textarea{display:block;width:100%;box-sizing:border-box;margin-top:7px;padding:12px 13px;border:1px solid rgba(203,198,219,.72);border-radius:15px;background:rgba(255,255,255,.74);color:#18204f;font:inherit;outline:0;resize:vertical}
+  #phase72About textarea{min-height:74px}
+  #phase72About input:focus,#phase72About textarea:focus{border-color:#ff6b35;box-shadow:0 0 0 3px rgba(255,107,53,.14)}
+  #phase72About .phase72-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:15px}
+  #phase72About .phase72-save{border:0;border-radius:14px;padding:11px 15px;background:linear-gradient(135deg,#ff6b35,#ff9f1c);color:#fff;font:inherit;font-weight:800;cursor:pointer;box-shadow:0 10px 20px rgba(255,107,53,.18)}
+  #phase72About .phase72-status{margin:0;color:#d84d22;font-size:12px;font-weight:800}
+  @media(max-width:620px){#phase72About .phase72-about-head{gap:12px}#phase72About .phase72-fields{grid-template-columns:1fr}#phase72About label.phase72-wide{grid-column:auto}}
+</style>
+<script id="phase72AboutSettings">
+  (function(){
+    function init(){
+      var tools=document.querySelector('#settings .settings-tools');if(!tools)return false;
+      var old=document.getElementById('phase13About');if(old)old.remove();
+      var card=document.getElementById('phase72About');if(!card){
+        card=document.createElement('article');card.id='phase72About';card.className='panel';
+        card.innerHTML='<div class="phase72-about-head"><div><p class="phase72-kicker">YOUR STORY</p><h3>About me</h3><p class="phase72-copy">Add a little context to your budget. This stays on this device and helps make your planning space feel like yours.</p></div><div class="phase72-badge" aria-hidden="true">✦</div></div><div class="phase72-fields"><label>What should we call you?<input id="phase72AboutName" maxlength="60" placeholder="Your name or nickname"></label><label>What are you working toward?<input id="phase72AboutFocus" maxlength="80" placeholder="A calmer month, a trip, a goal…"></label><label class="phase72-wide">A note about your money journey<textarea id="phase72AboutBio" maxlength="240" placeholder="A short reminder for future you"></textarea></label></div><div class="phase72-actions"><button type="button" class="phase72-save" id="phase72AboutSave">Save about me</button><p class="phase72-status" id="phase72AboutStatus" role="status" aria-live="polite"></p></div>';
+        tools.appendChild(card);
+      }
+      var data={};try{data=JSON.parse(localStorage.getItem('cosmic-budget-about')||'{}')}catch(e){}
+      var name=card.querySelector('#phase72AboutName'),focus=card.querySelector('#phase72AboutFocus'),bio=card.querySelector('#phase72AboutBio');name.value=data.name||'';focus.value=data.focus||'';bio.value=data.bio||'';
+      var save=card.querySelector('#phase72AboutSave');if(!save.dataset.ready){save.dataset.ready='1';save.onclick=function(){localStorage.setItem('cosmic-budget-about',JSON.stringify({name:name.value.trim(),focus:focus.value.trim(),bio:bio.value.trim()}));card.querySelector('#phase72AboutStatus').textContent='Saved on this device.';setTimeout(function(){card.querySelector('#phase72AboutStatus').textContent=''},2400)}}
+      return true;
+    }
+    if(!init()){var tries=0,t=setInterval(function(){if(init()||++tries>40)clearInterval(t)},100)}
   })();
 </script>
 <style id="phase71ActivityEmptyStyles">
