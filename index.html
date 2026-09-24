@@ -1682,3 +1682,14 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
     if(!start()){var tries=0,t=setInterval(function(){if(start()||++tries>80)clearInterval(t)},100)}
   })();
 </script>
+<script id="phase74AboutCleanup">
+  (function(){
+    function clean(){
+      var page=document.getElementById('phase73AboutPage'),legacy=document.getElementById('phase13About'),old=document.getElementById('phase72About');
+      if(legacy)legacy.remove();if(old)old.remove();
+      if(page&&!page.dataset.phase74Init){page.dataset.phase74Init='1';page.classList.add('hidden')}
+      return !!page;
+    }
+    clean();var tries=0,t=setInterval(function(){if(clean()||++tries>80)clearInterval(t)},100);
+  })();
+</script>
