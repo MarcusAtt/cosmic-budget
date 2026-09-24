@@ -48,17 +48,29 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
       button.setAttribute('aria-label', 'About');
       button.title = 'About';
       button.addEventListener('click', function () {
-        var settingsTab = document.getElementById('settingsTab');
-        if (settingsTab) settingsTab.click();
-        button.classList.add('active');
-        setTimeout(function () {
-          var about = document.getElementById('phase13About');
-          if (about) about.scrollIntoView({behavior:'smooth', block:'center'});
-        }, 180);
+        if (typeof window.phase73OpenAbout === 'function') return window.phase73OpenAbout();
+        var aboutTab = document.getElementById('phase73AboutTab');
+        if (aboutTab) aboutTab.click();
       });
     }
     setTimeout(bindAboutToolbar, 120);
     setTimeout(bindAboutToolbar, 700);
+  })();
+</script>
+<style id="phase85AboutSeparationStyles">#settings #phase72About,#settings #phase13About{display:none!important}</style>
+<script id="phase85AboutSeparation">
+  (function(){
+    function mount(){
+      var legacy=document.getElementById('phase72About');
+      if(legacy)legacy.remove();
+      var page=document.getElementById('phase73AboutPage');
+      if(!page)return false;
+      page.setAttribute('aria-label','About Cosmic Budget');
+      var tab=document.getElementById('phase73AboutTab');
+      if(tab){tab.textContent='About';tab.setAttribute('aria-label','Open About page');}
+      return true;
+    }
+    if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},80)}
   })();
 </script>
 <style id="phase83SettingsStatusStyles">
@@ -76,6 +88,13 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
       function update(){var states=[profileReady()?'Ready':'Add details',localStorage.getItem('cosmic-budget-liquid-intensity')?'Saved':'Using default',goalReady()?'Goal set':'Add a goal','Local only'];buttons.forEach(function(b,i){b.classList.add('phase83-shortcut');var status=b.querySelector('.phase83-status');if(!status){status=document.createElement('span');status.className='phase83-status';b.appendChild(status)}status.textContent=states[i];status.classList.toggle('is-ready',i===0?profileReady():i===2?goalReady():i===3)})}
       update();['settingsSaveProfile','staticSaveGoal','staticIntensity'].forEach(function(id){var control=document.getElementById(id);if(control&&!control.dataset.phase83Ready){control.dataset.phase83Ready='1';control.addEventListener(control.tagName==='INPUT'?'input':'click',update)}});return true;
     }
+    if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>80)clearInterval(t)},100)}
+  })();
+</script>
+<style id="phase84SettingsStatusPolish">#phase79SettingsOverview .phase83-status:before{content:'•';margin-right:5px;color:#d84d22}#phase79SettingsOverview .phase83-status.is-ready:before{color:#2b9277}</style>
+<script id="phase84SettingsStatusPolishScript">
+  (function(){
+    function mount(){var box=document.getElementById('phase79SettingsOverview');if(!box)return false;var names=['Profile','Glassness','Savings goal','Backup data'];box.querySelectorAll('button').forEach(function(button,i){var status=button.querySelector('.phase83-status');if(status){button.setAttribute('aria-label',names[i]+': '+status.textContent.trim());button.title=names[i]+' · '+status.textContent.trim()}});return true}
     if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>80)clearInterval(t)},100)}
   })();
 </script>
@@ -1694,6 +1713,7 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
       var data={};try{data=JSON.parse(localStorage.getItem('cosmic-budget-about')||'{}')}catch(e){}
       var name=page.querySelector('#phase73AboutName'),focus=page.querySelector('#phase73AboutFocus'),bio=page.querySelector('#phase73AboutBio');name.value=data.name||'';focus.value=data.focus||'';bio.value=data.bio||'';
       var save=page.querySelector('#phase73AboutSave');if(!save.dataset.ready){save.dataset.ready='1';save.onclick=function(){localStorage.setItem('cosmic-budget-about',JSON.stringify({name:name.value.trim(),focus:focus.value.trim(),bio:bio.value.trim()}));page.querySelector('#phase73AboutStatus').textContent='Saved on this device.';setTimeout(function(){page.querySelector('#phase73AboutStatus').textContent=''},2400)}}
+      window.phase73OpenAbout=open;
       var ab=document.getElementById('liquidAboutButton');if(ab&&!ab.dataset.phase73Ready){ab.dataset.phase73Ready='1';ab.onclick=open;ab.setAttribute('aria-label','Open About')}
       return true;
     }
