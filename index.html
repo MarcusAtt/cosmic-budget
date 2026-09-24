@@ -1705,3 +1705,20 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
   })();
 </script>
 <style id="phase76HideLegacyAbout">#settings #phase13About,#settings #phase72About{display:none!important}</style>
+<style id="phase78AboutPolishStyles">
+  #phase73AboutPage .phase78-back{margin-top:14px;border:1px solid rgba(255,255,255,.9);border-radius:14px;padding:10px 14px;background:rgba(255,255,255,.72);color:#273052;font:inherit;font-weight:800;cursor:pointer}
+  #phase73AboutPage .phase78-back:hover{border-color:#ff6b35;color:#d84d22;background:rgba(255,255,255,.9)}
+  #phase73AboutPage button:focus-visible,#phase73AboutPage input:focus-visible,#phase73AboutPage textarea:focus-visible{outline:3px solid #ff6b35;outline-offset:3px}
+  #phase73AboutPage .phase78-count{display:block;margin-top:5px;color:#68708f;font-size:11px;font-weight:700;text-align:right}
+</style>
+<script id="phase78AboutPolish">
+  (function(){
+    function mount(){
+      var page=document.getElementById('phase73AboutPage'),save=document.getElementById('phase73AboutSave');if(!page||!save)return false;
+      if(!page.querySelector('.phase78-back')){var back=document.createElement('button');back.type='button';back.className='phase78-back';back.textContent='← Back to budget';back.onclick=function(){var tab=document.getElementById('budgetTab');if(tab)tab.click()};save.parentElement.appendChild(back)}
+      [['phase73AboutName','60'],['phase73AboutFocus','80'],['phase73AboutBio','240']].forEach(function(pair){var field=document.getElementById(pair[0]);if(!field||field.dataset.phase78Ready)return;field.dataset.phase78Ready='1';var count=document.createElement('span');count.className='phase78-count';count.id=pair[0]+'Count';count.setAttribute('aria-live','polite');field.parentElement.appendChild(count);field.setAttribute('aria-describedby',count.id);function update(){count.textContent=(field.value||'').length+' / '+pair[1]+' characters'}field.addEventListener('input',update);update()});
+      return true;
+    }
+    if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>80)clearInterval(t)},100)}
+  })();
+</script>
