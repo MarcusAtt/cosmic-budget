@@ -57,6 +57,24 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     setTimeout(bindAboutToolbar, 700);
   })();
 </script>
+<style id="phase87AboutAccessibility">
+  #phase73AboutPage:focus{outline:0}#phase73AboutPage h2:focus{outline:3px solid #ff6b35;outline-offset:6px;border-radius:8px}
+</style>
+<script id="phase87AboutAccessibilityScript">
+  (function(){
+    function mount(){
+      var page=document.getElementById('phase73AboutPage'),heading=page&&page.querySelector('h2'),tab=document.getElementById('phase73AboutTab');
+      if(!page||!heading)return false;
+      heading.id='phase87AboutTitle';heading.tabIndex=-1;page.setAttribute('role','region');page.setAttribute('aria-labelledby','phase87AboutTitle');
+      if(tab){tab.setAttribute('aria-label','Open About page');tab.setAttribute('aria-controls','phase73AboutPage')}
+      function focusAbout(){setTimeout(function(){if(!page.classList.contains('hidden'))heading.focus({preventScroll:true})},180)}
+      [document.getElementById('liquidAboutButton'),tab].forEach(function(el){if(el&&!el.dataset.phase87Bound){el.dataset.phase87Bound='1';el.addEventListener('click',focusAbout)}});
+      if(!document.body.dataset.phase87Escape){document.body.dataset.phase87Escape='1';document.addEventListener('keydown',function(event){if(event.key==='Escape'&&!page.classList.contains('hidden')){var budget=document.getElementById('budgetTab');if(budget)budget.click()}})}
+      return true;
+    }
+    if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},80)}
+  })();
+</script>
 <style id="phase85AboutSeparationStyles">#settings #phase72About,#settings #phase13About{display:none!important}</style>
 <script id="phase85AboutSeparation">
   (function(){
