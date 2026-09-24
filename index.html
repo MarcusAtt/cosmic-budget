@@ -1693,3 +1693,14 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
     clean();var tries=0,t=setInterval(function(){if(clean()||++tries>80)clearInterval(t)},100);
   })();
 </script>
+<script id="phase75AboutVisibilityRepair">
+  (function(){
+    function sync(){
+      var page=document.getElementById('phase73AboutPage'),tab=document.getElementById('phase73AboutTab');if(!page)return;
+      ['phase13About','phase72About'].forEach(function(id){var node=document.getElementById(id);if(node)node.remove()});
+      if(!tab||!tab.classList.contains('active'))page.classList.add('hidden');
+    }
+    var count=0,watch=setInterval(function(){sync();if(++count>120)clearInterval(watch)},100);
+    new MutationObserver(sync).observe(document.body,{childList:true,subtree:true});
+  })();
+</script>
