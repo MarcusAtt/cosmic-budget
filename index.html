@@ -61,6 +61,33 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     setTimeout(bindAboutToolbar, 700);
   })();
 </script>
+<style id="phase68ActivityFinderStyles">
+  #phase68ActivityTools{display:grid;grid-template-columns:minmax(0,1fr) 150px;gap:9px;margin:14px 0 4px}
+  #phase68ActivityTools input,#phase68ActivityTools select{width:100%;min-width:0;padding:10px 12px;border:1px solid rgba(255,255,255,.9);border-radius:14px;background:rgba(255,255,255,.72);color:#18204f;font:inherit;outline:0}
+  #phase68ActivityTools input:focus,#phase68ActivityTools select:focus{border-color:#ff6b35;box-shadow:0 0 0 3px rgba(255,107,53,.14)}
+  #phase68ActivityTools input::placeholder{color:#68708f}
+  @media(max-width:520px){#phase68ActivityTools{grid-template-columns:1fr}.phase68-count{font-size:11px}}
+</style>
+<script id="phase68ActivityFinder">
+  (function(){
+    function mount(){
+      var activity=document.getElementById('activity'),panel=activity&&activity.parentElement;
+      if(!activity||!panel)return false;
+      var tools=document.getElementById('phase68ActivityTools');
+      if(!tools){
+        tools=document.createElement('div');tools.id='phase68ActivityTools';tools.setAttribute('aria-label','Find activity');
+        tools.innerHTML='<input id="phase68ActivitySearch" type="search" placeholder="Find activity…" aria-label="Find activity"><select id="phase68ActivityCategory" aria-label="Filter activity category"><option value="">All categories</option><option>Housing</option><option>Food</option><option>Transport</option><option>Fun</option><option>Health</option><option>Other</option></select>';
+        var heading=panel.querySelector('.panelhead');if(heading)heading.insertAdjacentElement('afterend',tools);else panel.insertBefore(tools,activity);
+        var apply=function(){var q=(document.getElementById('phase68ActivitySearch').value||'').toLowerCase().trim(),c=document.getElementById('phase68ActivityCategory').value||'';Array.prototype.forEach.call(activity.querySelectorAll('.row'),function(row){var text=(row.textContent||'').toLowerCase();row.style.display=(!q||text.indexOf(q)>-1)&&(!c||text.indexOf(c.toLowerCase())>-1)?'flex':'none'});};
+        tools.querySelector('#phase68ActivitySearch').addEventListener('input',apply);tools.querySelector('#phase68ActivityCategory').addEventListener('change',apply);
+        var observer=new MutationObserver(apply);observer.observe(activity,{childList:true});tools._phase68Apply=apply;
+      }
+      if(tools._phase68Apply)tools._phase68Apply();return true;
+    }
+    function start(){if(!mount())setTimeout(start,500)}
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start,{once:true});else start();
+  })();
+</script>
 
 <style id="phase66WeeklyCompassStyles">
   #phase66WeeklyCompass{display:grid;grid-template-columns:minmax(0,1.6fr) repeat(3,minmax(110px,.8fr));gap:12px;margin:0 0 20px;padding:18px;border:1px solid rgba(255,255,255,.9);border-radius:26px;background:linear-gradient(135deg,rgba(255,255,255,.84),rgba(255,246,235,.68));box-shadow:0 18px 42px rgba(55,43,107,.12),inset 0 1px rgba(255,255,255,.96);color:#18204f}
