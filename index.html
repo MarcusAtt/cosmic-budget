@@ -99,6 +99,23 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     mount();setTimeout(mount,250);setTimeout(mount,900);setTimeout(mount,1800);
   })();
 </script>
+<script id="phase89AboutTabState">
+  (function(){
+    function mount(){
+      var page=document.getElementById('phase73AboutPage'),aboutTab=document.getElementById('phase73AboutTab');
+      if(!page||!aboutTab)return false;
+      aboutTab.setAttribute('role','tab');aboutTab.setAttribute('aria-controls','phase73AboutPage');
+      function sync(){
+        var aboutVisible=!page.classList.contains('hidden');
+        document.querySelectorAll('.tabs .tab').forEach(function(tab){var selected=aboutVisible?tab===aboutTab:tab.classList.contains('active');tab.setAttribute('aria-selected',selected?'true':'false');if(aboutVisible&&tab!==aboutTab)tab.classList.remove('active')});
+        aboutTab.classList.toggle('active',aboutVisible);aboutTab.setAttribute('aria-selected',aboutVisible?'true':'false');
+      }
+      sync();if(!document.body.dataset.phase89State){document.body.dataset.phase89State='1';setInterval(sync,250)}
+      return true;
+    }
+    if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},80)}
+  })();
+</script>
 <style id="phase85AboutSeparationStyles">#settings #phase72About,#settings #phase13About{display:none!important}</style>
 <script id="phase85AboutSeparation">
   (function(){
