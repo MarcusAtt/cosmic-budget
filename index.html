@@ -160,6 +160,17 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     mount();setTimeout(mount,300);setTimeout(mount,1000);setTimeout(mount,2000);
   })();
 </script>
+<script id="phase95ActivityDialogA11y">
+  (function(){
+    function mount(){
+      var dialog=document.getElementById('expenseDialog'),title=document.getElementById('expenseDialogTitle');
+      if(!dialog||!title)return false;
+      title.id='expenseDialogTitle';dialog.setAttribute('aria-labelledby','expenseDialogTitle');dialog.setAttribute('aria-modal','true');
+      return true;
+    }
+    mount();setTimeout(mount,300);setTimeout(mount,1000);
+  })();
+</script>
 <style id="phase85AboutSeparationStyles">#settings #phase72About,#settings #phase13About{display:none!important}</style>
 <script id="phase85AboutSeparation">
   (function(){
