@@ -116,6 +116,22 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},80)}
   })();
 </script>
+<script id="phase90NavigationState">
+  (function(){
+    function mount(){
+      var map=[['budget','budgetTab'],['invest','investTab'],['lifetime','lifetimeTab'],['whatif','whatifTab'],['settings','settingsTab']],about=document.getElementById('phase73AboutPage'),aboutTab=document.getElementById('phase73AboutTab');
+      if(!about||!aboutTab)return false;
+      function sync(){
+        var aboutVisible=!about.classList.contains('hidden'),activeTab=null;
+        if(!aboutVisible)map.some(function(pair){var section=document.getElementById(pair[0]);if(section&&!section.classList.contains('hidden')){activeTab=document.getElementById(pair[1]);return true}return false});
+        document.querySelectorAll('.tabs .tab').forEach(function(tab){var selected=aboutVisible?tab===aboutTab:tab===activeTab;tab.classList.toggle('active',selected);tab.setAttribute('aria-selected',selected?'true':'false')});
+      }
+      sync();if(!document.body.dataset.phase90State){document.body.dataset.phase90State='1';setInterval(sync,250)}
+      return true;
+    }
+    if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},80)}
+  })();
+</script>
 <style id="phase85AboutSeparationStyles">#settings #phase72About,#settings #phase13About{display:none!important}</style>
 <script id="phase85AboutSeparation">
   (function(){
