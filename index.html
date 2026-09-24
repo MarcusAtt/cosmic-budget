@@ -73,6 +73,18 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},80)}
   })();
 </script>
+<script id="phase86AboutNavigationIsolation">
+  (function(){
+    function mount(){
+      var page=document.getElementById('phase73AboutPage');
+      if(!page)return false;
+      function closeAbout(){page.classList.add('hidden');var aboutTab=document.getElementById('phase73AboutTab');if(aboutTab)aboutTab.classList.remove('active');}
+      ['settingsTab','budgetTab','investTab','lifetimeTab','whatifTab','liquidSettingsButton','liquidProfileButton'].forEach(function(id){var el=document.getElementById(id);if(el&&!el.dataset.phase86Bound){el.dataset.phase86Bound='1';el.addEventListener('click',closeAbout)}});
+      return true;
+    }
+    if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},80)}
+  })();
+</script>
 <style id="phase83SettingsStatusStyles">
   #phase79SettingsOverview .phase83-shortcut{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;text-align:left}
   #phase79SettingsOverview .phase83-status{display:block;color:#68708f;font-size:10px;font-weight:700;line-height:1.1}
