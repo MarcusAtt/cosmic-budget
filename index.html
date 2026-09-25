@@ -925,7 +925,7 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
 function categoryFor(name){let n=name.toLowerCase();if(/rent|mortgage|home|housing/.test(n))return'Housing';if(/grocery|groceries|food|restaurant|coffee|lunch|dinner/.test(n))return'Food';if(/gas|fuel|uber|lyft|bus|train|parking/.test(n))return'Transport';if(/movie|game|concert|fun|hobby|shopping/.test(n))return'Fun';if(/doctor|medical|medicine|pharmacy|health/.test(n))return'Health';return'Other'}
 window.openExpense=function(i){i=i===undefined?-1:i;$('expenseDialogTitle').textContent=i<0?'Add expense':'Edit activity';$('expenseIndex').value=i;$('expenseName').value=i<0?'':s.tx[i][0];$('expenseAmount').value=i<0?'':s.tx[i][1];$('expenseCategory').value=i<0?'Other':s.tx[i][2];$('expenseDialog').showModal()};
 window.saveExpense=function(e){e.preventDefault();let i=Number($('expenseIndex').value),d=$('expenseName').value.trim(),n=Number($('expenseAmount').value),c=$('expenseCategory').value||categoryFor(d);if(!d||!n)return;if(i>=0)s.tx[i]=[d,n,c,0,s.tx[i][4]||selectedMonth];else s.tx.push([d,n,c,0,selectedMonth]);$('expenseDialog').close();save()};
-addExpense=openExpense;
+window.addExpense=window.openExpense;
 $('expenseName').addEventListener('input',e=>{$('expenseCategory').value=categoryFor(e.target.value)});
 let oldRender=render;
 render=function(){oldRender();document.querySelectorAll('#activity .row').forEach((row,i)=>{let tx=s.tx.filter(x=>(x[4]||selectedMonth)===selectedMonth).filter(x=>!x[3]).slice().reverse()[i];if(!tx)return;let b=document.createElement('button');b.className='ghost edit-btn';b.textContent='Edit';b.onclick=()=>openExpense(s.tx.indexOf(tx));row.appendChild(b)})};
