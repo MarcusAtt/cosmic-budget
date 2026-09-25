@@ -12,6 +12,11 @@ dialog label{display:block;font-size:12px;font-weight:800;color:var(--muted);mar
 dialog input{display:block;width:100%;padding:12px;margin-top:7px;border:1px solid var(--line);border-radius:10px;font:inherit;color:var(--ink)}
 dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px 0 0}
 </style>
+<style id="phase97ResetGlass">
+  .reset-action-button{background:linear-gradient(135deg,#e85d68,#b83255)!important;color:#fff!important;border-color:rgba(255,255,255,.74)!important;box-shadow:0 10px 22px rgba(184,50,85,.25),inset 0 1px 0 rgba(255,255,255,.5)!important;text-shadow:0 1px 1px rgba(91,20,38,.28)!important}
+  .reset-action-button:hover{background:linear-gradient(135deg,#f06b73,#c53a5d)!important}
+  .reset-action-button:focus-visible{outline:3px solid rgba(232,93,104,.55)!important;outline-offset:3px!important}
+</style>
 <style id="cosmic-readability-final">
   .btn,.primary,.notes-fab{background:linear-gradient(135deg,#ff6b35,#ff9f1c)!important;color:#fff!important;text-shadow:none!important}
   .ghost,.month,.month-chip,.tab,.side-btn,.liquid-side-button{color:#111827!important;text-shadow:none!important}
@@ -176,6 +181,12 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
   #phase55Cancel,#phase58Cancel,#budgetGlassCancel,#phase12Cancel{background:rgba(255,255,255,.72)!important;color:#273052!important;border:1px solid rgba(255,255,255,.9)!important}
   #phase55Save:focus-visible,#phase57Save:focus-visible,#phase58Save:focus-visible,#budgetGlassSave:focus-visible,#editContributionSave:focus-visible,#phase12Save:focus-visible,#staticSaveGoal:focus-visible,#incomeGlassSave:focus-visible,#liquidSaveProfile:focus-visible,#fallbackSaveGoal:focus-visible{outline:3px solid rgba(255,159,28,.72)!important;outline-offset:3px!important}
 </style>
+<script id="phase97ResetGlassScript">
+  (function(){
+    function apply(){var button=document.querySelector('.reset-action-button');if(!button)return;button.style.setProperty('background','linear-gradient(135deg,#e85d68,#b83255)','important');button.style.setProperty('color','#fff','important');button.style.setProperty('border-color','rgba(255,255,255,.74)','important');button.style.setProperty('box-shadow','0 10px 22px rgba(184,50,85,.25),inset 0 1px 0 rgba(255,255,255,.5)','important');button.style.setProperty('text-shadow','0 1px 1px rgba(91,20,38,.28)','important')}
+    apply();setTimeout(apply,250);setTimeout(apply,900);setTimeout(apply,1600);
+  })();
+</script>
 <style id="phase85AboutSeparationStyles">#settings #phase72About,#settings #phase13About{display:none!important}</style>
 <script id="phase85AboutSeparation">
   (function(){
