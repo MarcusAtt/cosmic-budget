@@ -404,7 +404,7 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
       });
     }
     sync();
-    new MutationObserver(sync).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+    if(document.body)new MutationObserver(sync).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
   })();
 </script>
 <script id="phase31KeyboardTabs">
@@ -431,7 +431,7 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     }
     function sync(){wire();var tabs=Array.prototype.slice.call(document.querySelectorAll('.tabs .tab'));tabs.forEach(function(tab){tab.tabIndex=tab.classList.contains('active')?0:-1;});}
     sync();
-    new MutationObserver(sync).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+    if(document.body)new MutationObserver(sync).observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
   })();
 </script>
 <style id="phase32FocusStyles">
@@ -860,7 +860,7 @@ dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px
     tabs.forEach(function(tab){new MutationObserver(sync).observe(tab,{attributes:true,attributeFilter:['class']});});
     var tabContainer=document.querySelector('.tabs');
     if(tabContainer)new MutationObserver(function(){tabs=Array.prototype.slice.call(document.querySelectorAll('.tab'));tabs.forEach(function(tab){if(!tab.dataset.phase27Observed){tab.dataset.phase27Observed='1';new MutationObserver(sync).observe(tab,{attributes:true,attributeFilter:['class']});}});sync();}).observe(tabContainer,{childList:true,subtree:true});
-    new MutationObserver(function(){tabs=Array.prototype.slice.call(document.querySelectorAll('.tab'));sync();}).observe(document.body,{childList:true,subtree:true});
+    if(document.body)new MutationObserver(function(){tabs=Array.prototype.slice.call(document.querySelectorAll('.tab'));sync();}).observe(document.body,{childList:true,subtree:true});
     document.addEventListener('click',function(event){if(event.target.closest&&event.target.closest('.tab'))setTimeout(sync,0);});
     sync();
   })();
@@ -1881,7 +1881,7 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
       if(!tab||!tab.classList.contains('active'))page.classList.add('hidden');
     }
     var count=0,watch=setInterval(function(){sync();if(++count>120)clearInterval(watch)},100);
-    new MutationObserver(sync).observe(document.body,{childList:true,subtree:true});
+    if(document.body)new MutationObserver(sync).observe(document.body,{childList:true,subtree:true});
   })();
 </script>
 <style id="phase76HideLegacyAbout">#settings #phase13About,#settings #phase72About{display:none!important}</style>
