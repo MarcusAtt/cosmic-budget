@@ -2053,7 +2053,7 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
   (function(){
     function mount(){
       var settings=document.getElementById('settings');if(!settings)return false;
-      settings.querySelectorAll('.settings-tools button').forEach(function(button){
+      settings.querySelectorAll('.settings-tools button, #settingsSaveProfile').forEach(function(button){
         if(button.id==='phase101ClearData'||button.dataset.phase108Ready)return;
         var text=(button.textContent||'').trim().toLowerCase();
         if(!/save|export|add due|backup/.test(text))return;
