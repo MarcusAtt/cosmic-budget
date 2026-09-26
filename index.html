@@ -2054,15 +2054,15 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
     function mount(){
       var settings=document.getElementById('settings');if(!settings)return false;
       settings.querySelectorAll('.settings-tools button, #settingsSaveProfile').forEach(function(button){
-        if(button.id==='phase101ClearData'||button.dataset.phase108Ready)return;
+        if(button.id==='phase101ClearData'||button.id==='staticImport'||button.dataset.phase108Ready)return;
         var text=(button.textContent||'').trim().toLowerCase();
-        if(!/save|export|add due|backup/.test(text))return;
+        if(!/save|export|add due/.test(text))return;
         button.dataset.phase108Ready='1';
         var status=document.createElement('span');status.className='phase108-feedback';status.setAttribute('role','status');status.setAttribute('aria-live','polite');button.insertAdjacentElement('afterend',status);
         button.addEventListener('click',function(){setTimeout(function(){if(/export|backup/.test(text))status.textContent='Backup ready on this device.';else if(/add due/.test(text))status.textContent='Due items added for this month.';else status.textContent='Saved on this device.';},80)});
       });
       return true;
     }
-    if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},100)}
+    mount();var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},100);
   })();
 </script>
