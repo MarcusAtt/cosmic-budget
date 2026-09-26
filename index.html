@@ -1934,3 +1934,29 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
     if(!watch()){var tries=0,t=setInterval(function(){if(watch()||++tries>100)clearInterval(t)},100)}
   })();
 </script>
+<style id="phase101ClearDataStyles">
+  #phase101ClearData{margin-top:10px;background:rgba(255,255,255,.58);color:#9f2343;border:1px solid rgba(190,58,83,.34);border-radius:13px;padding:10px 13px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+  #phase101ClearData:hover{background:rgba(255,239,243,.84);border-color:#c43a5c;color:#8f1f3c}
+  #phase101ClearData:focus-visible{outline:3px solid rgba(196,58,92,.42);outline-offset:3px}
+  #phase101ClearDataModal{position:fixed;inset:0;z-index:10040;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(31,24,75,.24);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  #phase101ClearDataModal.is-open{display:flex}
+  #phase101ClearDataModal .phase101-card{width:min(440px,100%);padding:26px;border:1px solid rgba(255,255,255,.82);border-radius:28px;background:linear-gradient(145deg,rgba(255,255,255,.9),rgba(255,239,244,.7));box-shadow:0 24px 70px rgba(53,37,113,.28),inset 0 1px rgba(255,255,255,.96);color:#172044}
+  #phase101ClearDataModal h2{margin:0 0 8px;font-size:1.4rem}#phase101ClearDataModal p{margin:0;color:#5e6a8e;line-height:1.5}#phase101ClearDataModal strong{color:#9f2343}
+  #phase101ClearDataModal .phase101-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:22px}#phase101ClearDataModal button{border:0;border-radius:14px;padding:12px 17px;font:inherit;font-weight:800;cursor:pointer}#phase101ClearDataModal .phase101-cancel{background:rgba(255,255,255,.72);color:#273052;border:1px solid rgba(255,255,255,.9)}#phase101ClearDataModal .phase101-confirm{background:linear-gradient(135deg,#e85d68,#b83255);color:#fff;border:1px solid rgba(255,255,255,.72);box-shadow:0 10px 24px rgba(184,50,85,.22)}
+  @media(max-width:520px){#phase101ClearDataModal .phase101-actions{flex-direction:column-reverse}#phase101ClearDataModal button{width:100%}}
+</style>
+<script id="phase101ClearDataScript">
+  (function(){
+    var keys=['cosmic-budget-public','cosmic-budget-notes','cosmic-budget-category-limits','cosmic-budget-month','cosmic-budget-profile','cosmic-budget-about','cosmic-budget-dark','cosmic-budget-liquid-intensity','cosmic-budget-prism-intensity'];
+    function mount(){
+      var exportButton=document.getElementById('staticExport'),panel=exportButton&&exportButton.closest('.panel');if(!panel)return false;
+      var button=document.getElementById('phase101ClearData');
+      if(!button){button=document.createElement('button');button.type='button';button.id='phase101ClearData';button.textContent='Clear local data';button.setAttribute('aria-label','Clear all Cosmic Budget data saved in this browser');exportButton.insertAdjacentElement('afterend',button)}
+      var modal=document.getElementById('phase101ClearDataModal');
+      if(!modal){modal=document.createElement('div');modal.id='phase101ClearDataModal';modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');modal.setAttribute('aria-labelledby','phase101ClearDataTitle');modal.setAttribute('aria-describedby','phase101ClearDataDescription');modal.innerHTML='<div class="phase101-card"><h2 id="phase101ClearDataTitle">Clear this browser data?</h2><p id="phase101ClearDataDescription">This removes your saved budget, notes, profile, goals, limits, and appearance preferences from this browser. <strong>This cannot be undone.</strong></p><div class="phase101-actions"><button type="button" class="phase101-cancel" id="phase101ClearDataCancel">Keep my data</button><button type="button" class="phase101-confirm" id="phase101ClearDataConfirm">Clear local data</button></div></div>';document.body.appendChild(modal)}
+      if(!button.dataset.phase101Ready){button.dataset.phase101Ready='1';var cancel=document.getElementById('phase101ClearDataCancel'),confirmButton=document.getElementById('phase101ClearDataConfirm');button.onclick=function(){modal.classList.add('is-open');setTimeout(function(){cancel&&cancel.focus()},30)};cancel.onclick=function(){modal.classList.remove('is-open');button.focus()};modal.addEventListener('click',function(e){if(e.target===modal)cancel.click()});confirmButton.onclick=function(){keys.forEach(function(key){localStorage.removeItem(key)});location.reload()};document.addEventListener('keydown',function(e){if(e.key==='Escape'&&modal.classList.contains('is-open'))cancel.click()})}
+      return true;
+    }
+    if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},100)}
+  })();
+</script>
