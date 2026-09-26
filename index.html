@@ -1960,3 +1960,14 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
     if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},100)}
   })();
 </script>
+<script id="phase102ClearDataFocus">
+  (function(){
+    function mount(){
+      var modal=document.getElementById('phase101ClearDataModal'),trigger=document.getElementById('phase101ClearData'),cancel=document.getElementById('phase101ClearDataCancel'),confirmButton=document.getElementById('phase101ClearDataConfirm');if(!modal||!trigger||!cancel||!confirmButton||modal.dataset.phase102Ready)return false;modal.dataset.phase102Ready='1';var previous=null;
+      trigger.addEventListener('click',function(){previous=trigger});
+      modal.addEventListener('keydown',function(e){if(e.key!=='Tab'||!modal.classList.contains('is-open'))return;var focusables=[cancel,confirmButton].filter(function(el){return !el.disabled});if(!focusables.length)return;var index=focusables.indexOf(document.activeElement);if(e.shiftKey){if(index<=0){e.preventDefault();focusables[focusables.length-1].focus()}}else if(index===focusables.length-1){e.preventDefault();focusables[0].focus()}});
+      cancel.addEventListener('click',function(){if(previous)setTimeout(function(){previous.focus()},0)});return true;
+    }
+    if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},100)}
+  })();
+</script>
