@@ -1927,3 +1927,10 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
     if(!apply()){var tries=0,t=setInterval(function(){if(apply()||++tries>80)clearInterval(t)},100)}
   })();
 </script>
+<script id="phase99ResetGlassMutationGuard">
+  (function(){
+    function apply(b){if(!b)return;b.style.setProperty('background','linear-gradient(135deg,#e85d68,#b83255)','important');b.style.setProperty('color','#fff','important');b.style.setProperty('border-color','rgba(255,255,255,.74)','important');b.style.setProperty('box-shadow','0 10px 22px rgba(184,50,85,.25),inset 0 1px 0 rgba(255,255,255,.5)','important');b.style.setProperty('text-shadow','0 1px 1px rgba(91,20,38,.28)','important')}
+    function watch(){var b=document.querySelector('.reset-action-button');if(!b)return false;apply(b);if(!b.dataset.phase99Guard){b.dataset.phase99Guard='1';new MutationObserver(function(){if(b.dataset.phase99Applying)return;b.dataset.phase99Applying='1';apply(b);b.dataset.phase99Applying='';}).observe(b,{attributes:true,attributeFilter:['style','class']})}return true}
+    if(!watch()){var tries=0,t=setInterval(function(){if(watch()||++tries>100)clearInterval(t)},100)}
+  })();
+</script>
