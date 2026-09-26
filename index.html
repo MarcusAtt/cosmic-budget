@@ -2066,3 +2066,41 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
     mount();var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},100);
   })();
 </script>
+<style id="phase111IncomeDialogStyles">
+  #phase111IncomeDialog{width:min(420px,calc(100% - 32px));border:1px solid rgba(255,255,255,.88);border-radius:28px;padding:0;background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(255,239,231,.82));color:#172044;box-shadow:0 26px 80px rgba(53,37,113,.3),inset 0 1px rgba(255,255,255,.98)}
+  #phase111IncomeDialog::backdrop{background:rgba(31,24,75,.26);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+  #phase111IncomeDialog form{padding:25px}
+  #phase111IncomeDialog h2{margin:0 0 6px;font-size:1.4rem;letter-spacing:-.02em}
+  #phase111IncomeDialog p{margin:0;color:#5e6a8e;line-height:1.45}
+  #phase111IncomeDialog label{display:block;margin-top:20px;color:#536080;font-size:12px;font-weight:850;letter-spacing:.02em}
+  #phase111IncomeDialog input{display:block;width:100%;margin-top:8px;padding:13px 14px;border:1px solid rgba(109,99,151,.28);border-radius:16px;background:rgba(255,255,255,.84);color:#172044;font:inherit;font-size:17px}
+  #phase111IncomeDialog menu{display:flex;justify-content:flex-end;gap:10px;margin:22px 0 0;padding:0}
+  #phase111IncomeDialog button{min-height:46px;border:1px solid rgba(255,255,255,.9);border-radius:15px;padding:11px 16px;font:inherit;font-weight:850;cursor:pointer}
+  #phase111IncomeDialog .phase111-cancel{background:rgba(255,255,255,.72);color:#273052}
+  #phase111IncomeDialog .phase111-save{background:linear-gradient(135deg,#ff6b35,#ff9f1c);color:#fff;box-shadow:0 10px 22px rgba(255,107,53,.24)}
+  #phase111IncomeDialog .phase111-save:focus-visible,#phase111IncomeDialog .phase111-cancel:focus-visible{outline:3px solid #ff8a4c;outline-offset:3px}
+  @media(max-width:520px){#phase111IncomeDialog menu{flex-direction:column-reverse}#phase111IncomeDialog menu button{width:100%}}
+</style>
+<script id="phase111IncomeDialogScript">
+  (function(){
+    function mount(){
+      if(typeof s==='undefined')return false;
+      var dialog=document.getElementById('phase111IncomeDialog');
+      if(!dialog){
+        dialog=document.createElement('dialog');dialog.id='phase111IncomeDialog';dialog.setAttribute('aria-labelledby','phase111IncomeTitle');dialog.innerHTML='<form method="dialog" id="phase111IncomeForm"><h2 id="phase111IncomeTitle">Update monthly income</h2><p>Keep your monthly plan current. This stays saved in this browser.</p><label for="phase111IncomeInput">Monthly income<input id="phase111IncomeInput" type="number" min="0" step="0.01" inputmode="decimal" required></label><menu><button type="button" class="phase111-cancel" id="phase111IncomeCancel">Cancel</button><button type="submit" class="phase111-save">Save income</button></menu></form>';document.body.appendChild(dialog);
+      }
+      var input=document.getElementById('phase111IncomeInput'),form=document.getElementById('phase111IncomeForm'),cancel=document.getElementById('phase111IncomeCancel'),trigger=document.querySelector('#income')?.parentElement?.querySelector('button');
+      if(!input||!form||!cancel)return false;
+      var incomeCard=document.getElementById('income')?.closest('.card');trigger=incomeCard&&incomeCard.querySelector('button');
+      if(!dialog.dataset.phase111Ready){
+        dialog.dataset.phase111Ready='1';
+        window.setIncome=function(){input.value=Number(s.income||0);dialog.showModal();setTimeout(function(){input.focus();input.select()},20)};
+        form.addEventListener('submit',function(event){event.preventDefault();var value=Number(input.value);if(!Number.isFinite(value)||value<0)return;s.income=value;save();dialog.close();if(trigger)trigger.focus()});
+        cancel.addEventListener('click',function(){dialog.close();if(trigger)trigger.focus()});
+        dialog.addEventListener('click',function(event){if(event.target===dialog){dialog.close();if(trigger)trigger.focus()}});
+      }
+      return true;
+    }
+    if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},100)}else setTimeout(mount,250);
+  })();
+</script>
