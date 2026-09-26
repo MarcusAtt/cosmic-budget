@@ -12,6 +12,43 @@ dialog label{display:block;font-size:12px;font-weight:800;color:var(--muted);mar
 dialog input{display:block;width:100%;padding:12px;margin-top:7px;border:1px solid var(--line);border-radius:10px;font:inherit;color:var(--ink)}
 dialog menu{display:flex;justify-content:flex-end;gap:10px;padding:0;margin:22px 0 0}
 </style>
+<script id="phase106CompleteKeyboardTabs">
+  (function(){
+    function panelId(tab){
+      var map={budgetTab:'budget',investTab:'invest',lifetimeTab:'lifetime',whatifTab:'whatif',settingsTab:'settings',phase73AboutTab:'phase73AboutPage'};
+      return map[tab.id]||'';
+    }
+    function sync(){
+      var tabs=Array.prototype.slice.call(document.querySelectorAll('.tabs .tab'));
+      if(!tabs.length)return;
+      tabs.forEach(function(tab){
+        var panelIdValue=panelId(tab),panel=panelIdValue&&document.getElementById(panelIdValue),active=tab.classList.contains('active');
+        tab.setAttribute('role','tab');
+        if(panelIdValue)tab.setAttribute('aria-controls',panelIdValue);
+        tab.setAttribute('aria-selected',active?'true':'false');
+        tab.tabIndex=active?0:-1;
+        if(panel){panel.setAttribute('role','tabpanel');panel.setAttribute('aria-labelledby',tab.id||'');panel.setAttribute('aria-hidden',active?'false':'true');}
+        if(!tab.dataset.phase106Ready){
+          tab.dataset.phase106Ready='1';
+          tab.addEventListener('keydown',function(event){
+            var currentTabs=Array.prototype.slice.call(document.querySelectorAll('.tabs .tab')),index=currentTabs.indexOf(tab),next=index;
+            if(index<0)return;
+            if(event.key==='ArrowRight'||event.key==='ArrowDown')next=(index+1)%currentTabs.length;
+            else if(event.key==='ArrowLeft'||event.key==='ArrowUp')next=(index-1+currentTabs.length)%currentTabs.length;
+            else if(event.key==='Home')next=0;
+            else if(event.key==='End')next=currentTabs.length-1;
+            else return;
+            event.preventDefault();currentTabs[next].focus();currentTabs[next].click();
+          });
+        }
+      });
+    }
+    sync();
+    var tabsRoot=document.querySelector('.tabs');
+    if(tabsRoot)new MutationObserver(sync).observe(tabsRoot,{childList:true,subtree:true,attributes:true,attributeFilter:['class']});
+    document.addEventListener('click',function(event){if(event.target.closest&&event.target.closest('.tabs .tab'))setTimeout(sync,0)});
+  })();
+</script>
 <style id="phase97ResetGlass">
   .reset-action-button{background:linear-gradient(135deg,#e85d68,#b83255)!important;color:#fff!important;border-color:rgba(255,255,255,.74)!important;box-shadow:0 10px 22px rgba(184,50,85,.25),inset 0 1px 0 rgba(255,255,255,.5)!important;text-shadow:0 1px 1px rgba(91,20,38,.28)!important}
   .reset-action-button:hover{background:linear-gradient(135deg,#f06b73,#c53a5d)!important}
