@@ -2044,3 +2044,25 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
     #settings .profile-save-row button{width:100%;margin-top:6px}
   }
 </style>
+<style id="phase108SettingsFeedback">
+  .phase108-feedback{display:block;min-height:18px;margin:7px 0 0;color:#287b68;font-size:12px;font-weight:750;line-height:1.35}
+  .phase108-feedback:empty{display:none}
+  @media(max-width:700px){.phase108-feedback{text-align:center;margin-top:8px}}
+</style>
+<script id="phase108SettingsFeedbackScript">
+  (function(){
+    function mount(){
+      var settings=document.getElementById('settings');if(!settings)return false;
+      settings.querySelectorAll('.settings-tools button').forEach(function(button){
+        if(button.id==='phase101ClearData'||button.dataset.phase108Ready)return;
+        var text=(button.textContent||'').trim().toLowerCase();
+        if(!/save|export|add due|backup/.test(text))return;
+        button.dataset.phase108Ready='1';
+        var status=document.createElement('span');status.className='phase108-feedback';status.setAttribute('role','status');status.setAttribute('aria-live','polite');button.insertAdjacentElement('afterend',status);
+        button.addEventListener('click',function(){setTimeout(function(){if(/export|backup/.test(text))status.textContent='Backup ready on this device.';else if(/add due/.test(text))status.textContent='Due items added for this month.';else status.textContent='Saved on this device.';},80)});
+      });
+      return true;
+    }
+    if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},100)}
+  })();
+</script>
