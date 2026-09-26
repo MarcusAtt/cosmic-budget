@@ -1971,3 +1971,16 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
     if(!mount()){var tries=0,t=setInterval(function(){if(mount()||++tries>100)clearInterval(t)},100)}
   })();
 </script>
+<style id="phase103TabGlassConsistency">
+  .tabs .tab{border:1px solid rgba(255,255,255,.9)!important;border-bottom:3px solid transparent!important;border-radius:14px!important;background:rgba(255,255,255,.62)!important;color:#273052!important;box-shadow:0 10px 24px rgba(53,43,112,.1),inset 0 1px 0 rgba(255,255,255,.9)!important}
+  .tabs .tab:hover{background:rgba(255,255,255,.82)!important;color:#d84d22!important}
+  .tabs .tab.active{border-bottom-color:#ff6b35!important;color:#d84d22!important;background:rgba(255,255,255,.8)!important;box-shadow:0 10px 24px rgba(53,43,112,.12),0 3px 0 #ff6b35!important}
+  @media(max-width:700px){.tabs .tab{min-height:44px!important;padding:10px 5px!important}}
+</style>
+<script id="phase103TabGlassScript">
+  (function(){
+    function apply(tab){if(!tab)return;var active=tab.classList.contains('active')||tab.getAttribute('aria-selected')==='true';tab.style.setProperty('background',active?'rgba(255,255,255,.8)':'rgba(255,255,255,.62)','important');tab.style.setProperty('color',active?'#d84d22':'#273052','important');tab.style.setProperty('border','1px solid rgba(255,255,255,.9)','important');tab.style.setProperty('border-bottom',active?'3px solid #ff6b35':'3px solid transparent','important');tab.style.setProperty('border-radius','14px','important');tab.style.setProperty('box-shadow',active?'0 10px 24px rgba(53,43,112,.12),0 3px 0 #ff6b35':'0 10px 24px rgba(53,43,112,.1),inset 0 1px 0 rgba(255,255,255,.9)','important')}
+    function watch(){var tabs=Array.from(document.querySelectorAll('.tabs .tab'));if(!tabs.length)return false;tabs.forEach(function(tab){apply(tab);if(!tab.dataset.phase103Guard){tab.dataset.phase103Guard='1';new MutationObserver(function(){apply(tab)}).observe(tab,{attributes:true,attributeFilter:['class','aria-selected','style']})}});return true}
+    if(!watch()){var tries=0,t=setInterval(function(){if(watch()||++tries>100)clearInterval(t)},100)}
+  })();
+</script>
