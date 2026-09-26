@@ -2028,3 +2028,19 @@ body.dark{--cream:#17172a;--ink:#f6f2ff;--muted:#b8b4cf;--line:#3a3655}body.dark
     .phase54-action .phase54-icon{flex:none;font-size:18px}
   }
 </style>
+<style id="phase107SettingsActionReadability">
+  #settings .settings-tools button,
+  #settings #settingsSaveProfile,
+  #settings #phase101ClearData{min-height:44px;padding:11px 15px;line-height:1.2;white-space:normal;text-align:center}
+  #settings .settings-tools button+button{margin-left:8px}
+  #settings .profile-save-row{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:4px}
+  #settings .profile-save-row button{margin:0}
+  @media(max-width:700px){
+    #settings .settings-tools button,
+    #settings #settingsSaveProfile,
+    #settings #phase101ClearData{width:100%;margin:8px 0 0;min-height:48px;font-size:14px}
+    #settings .settings-tools button+button{margin-left:0}
+    #settings .profile-save-row{display:block}
+    #settings .profile-save-row button{width:100%;margin-top:6px}
+  }
+</style>
